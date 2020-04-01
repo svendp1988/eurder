@@ -1,0 +1,30 @@
+#we use java
+language: java
+
+#we add the java development kit (jdk)
+jdk:
+- oraclejdk13
+# SonarCloud
+addons:
+  sonarcloud:
+    organization: "svendp1988"
+    token:
+      secure: "V+uUxXZSxnVtPkLEJkmodlZMIvaUqOF2mkFRsFzPMHaft2LQdi/m7zGsAJ7ukjHSlI4I5lKpW0/dAVpk+D1qg4/dc/8bzO7bNNbsYc0RLlR2sUg3JTHgNvYuSOI7ccafY8v5MOhK3O+kKGyXqfFFLAocRgxWSaGhJoISBeKKRKkjCBRNyfkIk+IncdB4c01E6Od6SapmZoAkwqpRIsnZlCRa4cJRi73HHAVoPmEPkFFCeO0uNch2/fZon7s8c0AUDF+kQvagf27OAbfvZCyeqOD8Z/2jghPND3gbDhcF4uI4ag6IUUPc7dsIA8xK/y++Zo+vs+DYKnM8h/kJjrodS9Y2CkQNF6wy0hiJkpoOqb+Ro3tV0xge+BntWp7reMg4BrtFrWeeODaTLlshJ76/Ze3UmyMYeotAwGuc6jIp5AqSW5efnH5vpKFlmUuwhhNq4+WtBGt2MI/H+Eq9ib9XNb9WXDqM0lwUuGrqeBPy6BPkYx9cXpeJPrxac+lTaBATXSLX+QuiDduyYlAxfrs3Yb9SWFF9CQvtYSIvuCYPx7zs7Rh6GF4HwZIG9Nt4N8mA1MlzP36EWEyBBifKYEc67xwucb1ZZZI4x9l84PkKKnoD5CwbGAb71VP6WZsT2fy8JxJX7fsV3/6i6Fwe97rrGPGmGuY0gEXN+YtEuOa56KM="
+
+before_install:
+- mvn clean
+
+script:
+#We avoid this error :" the job exceeded the maximum log length and has been terminated "
+- echo -e '<?xml version="1.0" encoding="UTF-8"?>\n<settings xsi:schemaLocation="http://maven.apache.org/SETTINGS/1.1.0 http://maven.apache.org/xsd/settings-1.1.0.xsd" xmlns="http://maven.apache.org/SETTINGS/1.1.0"\n    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">\n  <mirrors>\n    <mirror>\n      <id>mvnsearch-unavailable</id>\n      <name>mvnsearch-unavailable</name>\n      <mirrorOf>mvnsearch</mirrorOf>\n      <url>http://repo1.maven.org/maven2</url>\n    </mirror>\n  </mirrors>\n  <profiles>\n    <profile>\n      <id>no-mvnsearch</id>\n      <repositories>\n        <repository>\n          <id>mvnsearch</id>\n          <url>http://www.mvnsearch.org/maven2</url>\n          <releases>\n            <enabled>true</enabled>\n          </releases>\n          <snapshots>\n            <enabled>true</enabled>\n          </snapshots>\n        </repository>\n      </repositories>\n    </profile>\n  </profiles>\n  <activeProfiles>\n    <activeProfile>no-mvnsearch</activeProfile>\n  </activeProfiles>\n</settings>' > $HOME/.m2/settings.xml
+- cat $HOME/.m2/settings.xml
+# SonarCloud
+# the following command line builds the project, runs the tests with coverage and then execute the SonarCloud analysis
+- mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Pcoverage -Dsonar.projectKey=nielshendrickx_switchfully-DigiBooky
+# codecoverage
+- bash <(curl -s https://codecov.io/bash)
+
+after_success:
+#deploying the app on Heroku
+  - cd jar
+  - mvn heroku:deploy
