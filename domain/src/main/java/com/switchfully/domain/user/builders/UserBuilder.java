@@ -81,7 +81,7 @@ public class UserBuilder {
         return role;
     }
 
-    public String getPassWord() {
+    public String getPassword() {
         return passWord;
     }
 

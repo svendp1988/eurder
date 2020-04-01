@@ -11,14 +11,14 @@ public class User {
     private final String lastName;
     private final String email;
     private final UserRole role;
-    private String passWord;
+    private String password;
 
     public User(UserBuilder userBuilder) {
         firstName = userBuilder.getFirstName();
         lastName = userBuilder.getLastName();
         email = userBuilder.getEmail();
         role = userBuilder.getRole();
-        passWord = userBuilder.getPassWord();
+        password = userBuilder.getPassword();
     }
 
     public String getFirstName() {
@@ -38,7 +38,7 @@ public class User {
     }
 
     public String getPassword() {
-        return passWord;
+        return password;
     }
 
     public String getId() {
