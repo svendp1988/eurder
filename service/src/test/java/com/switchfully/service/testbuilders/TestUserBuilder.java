@@ -1,23 +1,26 @@
-package com.switchfully.domain.user.builders;
+package com.switchfully.service.testbuilders;
 
 import com.switchfully.domain.user.Address;
 import com.switchfully.domain.user.User;
+import com.switchfully.domain.user.builders.UserBuilder;
 import com.switchfully.domain.user.feature.UserRole;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
-public class UserBuilder {
-    private String firstName;
-    private String lastName;
-    private String email;
-    private UserRole role;
-    private String password;
-    private Address address;
+import static com.switchfully.service.testbuilders.TestAddressBuilder.testAddressBuilder;
 
-    protected UserBuilder () {
+public class TestUserBuilder extends UserBuilder {
+    private String firstName = "firstName";
+    private String lastName = "lastName";
+    private String email = "email";
+    private UserRole role;
+    private String password = "password";
+    private Address address = testAddressBuilder().build();
+
+    protected TestUserBuilder () {
     }
 
-    public static UserBuilder userBuilder() {
-        return new UserBuilder();
+    public static TestUserBuilder testUserBuilder() {
+        return new TestUserBuilder();
     }
 
     public User buildCustomer() {

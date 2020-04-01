@@ -1,19 +1,23 @@
 package com.switchfully.domain.user;
 
 //import com.switchfully.domain.exceptions.EmailAlreadyRegisteredException; //TODO: check exceptions
-import com.switchfully.domain.user.builders.UserBuilder;
-import com.switchfully.domain.user.feature.UserRole;
+
+import com.switchfully.domain.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
+
+import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
+import static com.switchfully.domain.user.feature.UserRole.CUSTOMER;
 
 @Repository
 public class UserRepository {
-    private final ConcurrentHashMap<String, User> userRepository;
+    private final ConcurrentHashMap<String, User> userDatabase;
 
     public UserRepository() {
-        this.userRepository = new ConcurrentHashMap<>();
+        this.userDatabase = new ConcurrentHashMap<>();
         createDefaultData();
     }
 
@@ -25,33 +29,41 @@ public class UserRepository {
 //        return true;
 //    }
 
-    public User registerNewUser(User newUser) {
-        userRepository.put(newUser.getId(), newUser);
-        return newUser;
+    public User registerAsCustomer(User newCustomer) {
+        userDatabase.put(newCustomer.getId(), newCustomer);
+        return newCustomer;
     }
 
-    private void createDefaultData(){
-        User user1 = UserBuilder.userBuilder()
-                .withEmail("admin@digibooky.com")
+    public User registerAsAdmin(User newAdmin) {
+        userDatabase.put(newAdmin.getId(), newAdmin);
+        return newAdmin;
+    }
+
+
+    public Collection<User> getAllCustomers() {
+        return userDatabase.values().stream()
+                .filter(user -> user.getRole().equals(CUSTOMER))
+                .collect(Collectors.toList());
+    }
+
+    public Collection<User> getAllUsers() {
+        return userDatabase.values();
+    }
+
+    public User getById(String id) {
+        var foundUser = userDatabase.get(id);
+        if (foundUser == null) {
+            throw new UserNotFoundException();
+        }
+        return foundUser;
+    }
+
+    private void createDefaultData() {
+        User defaultAdmin = userBuilder()
+                .withEmail("admin@order.com")
                 .withLastName("Admin")
-                .withPassWord("root")
-                .withRole(UserRole.ADMIN)
-                .buildUser();
-
-        User user2 = UserBuilder.userBuilder()
-                .withEmail("adrien.helin@gmail.com")
-                .withFirstName("Adrien")
-                .withLastName("Hélin")
-                .withINSS("88.10.07-363.84")
-                .withPassWord("funfunfun")
-                .withRole(UserRole.CUSTOMER)
-                .buildUser();
-
-        registerNewUser(user1);
-        registerNewUser(user2);
-    }
-
-    public Collection<? extends User> getAllUsers() {
-        return userRepository.values();
+                .withPassword("root")
+                .buildAdmin();
+        registerAsAdmin(defaultAdmin);
     }
 }

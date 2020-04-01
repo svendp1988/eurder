@@ -3,6 +3,7 @@ package com.switchfully.domain.user;
 import com.switchfully.domain.user.builders.UserBuilder;
 import com.switchfully.domain.user.feature.UserRole;
 
+import java.util.Objects;
 import java.util.UUID;
 
 public class User {
@@ -12,6 +13,7 @@ public class User {
     private final String email;
     private final UserRole role;
     private String password;
+    private Address address;
 
     public User(UserBuilder userBuilder) {
         firstName = userBuilder.getFirstName();
@@ -19,6 +21,11 @@ public class User {
         email = userBuilder.getEmail();
         role = userBuilder.getRole();
         password = userBuilder.getPassword();
+        address = userBuilder.getAddress();
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -41,7 +48,23 @@ public class User {
         return password;
     }
 
-    public String getId() {
-        return id;
+    public Address getAddress() {
+        return address;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(firstName, user.firstName) &&
+                Objects.equals(lastName, user.lastName) &&
+                Objects.equals(role, user.role) &&
+                Objects.equals(address, user.address);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(firstName, lastName, role, address);
     }
 }

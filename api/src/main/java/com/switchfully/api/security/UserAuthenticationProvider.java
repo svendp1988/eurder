@@ -34,7 +34,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider {
         User user = authenticationService.getUser(authentication.getPrincipal().toString(), authentication.getCredentials().toString());
         if(user != null){
             return new UsernamePasswordAuthenticationToken(
-                    user.getFirstName(),
+                    user.getEmail(),
                     user.getPassword(),
                     rolesToGrantedAuthorities(Feature.getFeaturesForRoles(newArrayList(user.getRole().toString()))));
         }

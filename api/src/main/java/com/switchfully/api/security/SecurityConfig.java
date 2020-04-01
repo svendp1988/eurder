@@ -2,7 +2,8 @@ package com.switchfully.api.security;
 
 //import com.switchfully.api.endpoints.BookController; //TODO: change to correct endpoints
 //import com.switchfully.api.endpoints.BorrowController;
-//import com.switchfully.api.endpoints.MemberController;
+
+import com.switchfully.api.endpoints.UserController;
 import com.switchfully.api.exceptions.CustomAccessDeniedHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +37,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.csrf().disable().authorizeRequests()
-//                .antMatchers(MemberController.USER_RESOURCE_PATH + "/**").permitAll()
-//                .antMatchers(BookController.BOOK_RESOURCE_PATH + "/**").permitAll()
+                .antMatchers(UserController.USER_RESOURCE_PATH + "**").permitAll()
+//                .antMatchers(BookController.BOOK_RESOURCE_PATH + "/**").permitAll() //TODO: manage access
 //                .antMatchers(BorrowController.BORROW_RESOURCE_PATH + "/**").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
