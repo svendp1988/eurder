@@ -1,22 +1,8 @@
 package com.switchfully.api.endpoints;
 
-import com.switchfully.domain.user.UserRepository;
-import com.switchfully.domain.user.builders.UserBuilder;
-import com.switchfully.service.user.CreateUserDto;
-import com.switchfully.service.user.UserDto;
-import com.switchfully.service.user.UserMapper;
-import com.switchfully.service.user.UserService;
-import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestComponent;
-import org.springframework.context.ApplicationContext;
-import org.springframework.test.web.reactive.server.WebTestClient;
 
-import static com.switchfully.api.testbuilders.TestUserBuilder.testUserBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.when;
 
 @TestComponent
 class UserControllerTest {

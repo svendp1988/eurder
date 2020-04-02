@@ -1,6 +1,8 @@
 package com.switchfully.service.user;
 
 import com.switchfully.domain.user.User;
+import com.switchfully.service.user.dto.CreateUserDto;
+import com.switchfully.service.user.dto.UserDto;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;

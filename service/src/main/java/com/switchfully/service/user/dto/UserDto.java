@@ -1,9 +1,10 @@
-package com.switchfully.service.user;
+package com.switchfully.service.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.switchfully.domain.user.Address;
 import com.switchfully.domain.user.User;
 import com.switchfully.domain.user.feature.UserRole;
+import com.switchfully.service.user.view.View;
 
 import java.util.Objects;
 

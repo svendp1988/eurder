@@ -1,10 +1,10 @@
 package com.switchfully.api.endpoints;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.switchfully.service.user.CreateUserDto;
-import com.switchfully.service.user.UserDto;
+import com.switchfully.service.user.dto.CreateUserDto;
+import com.switchfully.service.user.dto.UserDto;
 import com.switchfully.service.user.UserService;
-import com.switchfully.service.user.View;
+import com.switchfully.service.user.view.View;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

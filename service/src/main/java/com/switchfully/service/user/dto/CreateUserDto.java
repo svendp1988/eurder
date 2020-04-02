@@ -1,4 +1,4 @@
-package com.switchfully.service.user;
+package com.switchfully.service.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;

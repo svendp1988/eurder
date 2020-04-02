@@ -1,18 +1,18 @@
 package com.switchfully.domain.item.builders;
 
-import com.switchfully.domain.user.Address;
-import com.switchfully.domain.user.builders.UserBuilder;
 import org.junit.jupiter.api.Test;
 
-import static com.switchfully.domain.testbuilders.TestAddressBuilder.testAddressBuilder;
-import static com.switchfully.domain.testbuilders.TestItemBuilder.testItemBuilder;
-import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
-import static org.junit.jupiter.api.Assertions.*;
+import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ItemBuilderTest {
     @Test
     void itemBuilder_returnsCorrectValues() {
-        ItemBuilder itemBuilder = testItemBuilder();
+        ItemBuilder itemBuilder = itemBuilder()
+                .withName("name")
+                .withDescription("description")
+                .withPrice(0.0)
+                .withAmount(0);
         assertEquals("name", itemBuilder.getName());
         assertEquals("description", itemBuilder.getDescription());
         assertEquals(0.0, itemBuilder.getPrice());

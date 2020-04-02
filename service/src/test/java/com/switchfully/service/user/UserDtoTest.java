@@ -1,6 +1,7 @@
 package com.switchfully.service.user;
 
 import com.switchfully.domain.user.Address;
+import com.switchfully.service.user.dto.UserDto;
 import org.junit.jupiter.api.Test;
 
 import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
