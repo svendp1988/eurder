@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
 
+
 @RestController
 @RequestMapping(path = UserController.USER_RESOURCE_PATH)
 public class UserController {
