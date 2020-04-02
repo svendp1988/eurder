@@ -1,0 +1,29 @@
+package com.switchfully.service.address;
+
+import com.switchfully.domain.user.Address;
+import org.springframework.stereotype.Component;
+
+import static com.switchfully.domain.user.builders.AddressBuilder.addressBuilder;
+import static com.switchfully.service.address.AddressDtoBuilder.addressDtoBuilder;
+
+@Component
+public class AddressMapper {
+    public Address toAddress(AddressDto addressDto) {
+        return addressBuilder()
+                .withStreet(addressDto.street)
+                .withStreetNumber(addressDto.streetNumber)
+                .withPostalCode(addressDto.postalCode)
+                .withCity(addressDto.city)
+                .build();
+    }
+
+    public AddressDto toDto(Address address) {
+        return addressDtoBuilder()
+                .withStreet(address.getStreet())
+                .withStreetNumber(address.getStreetNumber())
+                .withPostalCode(address.getPostalCode())
+                .withCity(address.getCity())
+                .build();
+    }
+}
+

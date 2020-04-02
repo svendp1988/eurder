@@ -13,6 +13,26 @@ public class Address {
     private final String postalCode;
     private final String city;
 
+    public String getId() {
+        return id;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
     @JsonCreator
     public Address(AddressBuilder addressBuilder) {
         id = UUID.randomUUID().toString();

@@ -19,8 +19,8 @@ import java.util.Collection;
 @RestController
 @RequestMapping(path = UserController.USER_RESOURCE_PATH)
 public class UserController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(UserController.class);
     public static final String USER_RESOURCE_PATH = "/customers";
-    private final Logger loggerUser = LoggerFactory.getLogger(UserService.class);
     private final UserService userService;
 
     @Autowired
@@ -32,7 +32,7 @@ public class UserController {
     @ApiOperation(value = "Register as a member", notes = "Everyone can freely join Digibooky!", response = UserDto.class)
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto register(@RequestBody CreateUserDto newCustomer) {
-        loggerUser.info("Registering a new customer.");
+        LOGGER.info("Registering a new customer.");
         return userService.registerAsCustomer(newCustomer);
     }
 
@@ -42,7 +42,7 @@ public class UserController {
     @ApiOperation(value = "Get all registered members", notes = "A list of all the registered customers will be returned" , response = UserDto.class)
     @ResponseStatus(HttpStatus.OK)
     public Collection<UserDto> getAllMembers() {
-        loggerUser.info("Returning all members");
+        LOGGER.info("Returning all members");
         return userService.viewAllCustomers();
     }
 
@@ -52,7 +52,7 @@ public class UserController {
     @ApiOperation(value = "Get member by id.", notes = "Member with id will be returned" , response = UserDto.class)
     @ResponseStatus(HttpStatus.OK)
     public UserDto getAllMembers(@RequestParam String id) {
-        loggerUser.info("Returning member with id: " + id);
+        LOGGER.info("Returning member with id: " + id);
         return userService.getById(id);
     }
 }

@@ -7,7 +7,6 @@ public class TestItemBuilder extends ItemBuilder {
     private String name = "name";
     private String description = "description";
     private double price = 0.0;
-    private int amount = 0;
 
     protected TestItemBuilder() {
     }
@@ -35,11 +34,6 @@ public class TestItemBuilder extends ItemBuilder {
         return this;
     }
 
-    public ItemBuilder withAmount(int amount) {
-        this.amount = amount;
-        return this;
-    }
-
     public String getName() {
         return name;
     }
@@ -50,9 +44,5 @@ public class TestItemBuilder extends ItemBuilder {
 
     public double getPrice() {
         return price;
-    }
-
-    public int getAmount() {
-        return amount;
     }
 }

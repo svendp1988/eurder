@@ -11,11 +11,9 @@ class ItemBuilderTest {
         ItemBuilder itemBuilder = itemBuilder()
                 .withName("name")
                 .withDescription("description")
-                .withPrice(0.0)
-                .withAmount(0);
+                .withPrice(0.0);
         assertEquals("name", itemBuilder.getName());
         assertEquals("description", itemBuilder.getDescription());
         assertEquals(0.0, itemBuilder.getPrice());
-        assertEquals(0, itemBuilder.getAmount());
     }
 }

@@ -1,4 +1,4 @@
-package com.switchfully.api.endpoints;
+package com.switchfully.api.configuration;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

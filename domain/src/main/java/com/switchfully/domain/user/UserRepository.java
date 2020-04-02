@@ -6,6 +6,7 @@ import com.switchfully.domain.exceptions.UserNotFoundException;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -14,7 +15,7 @@ import static com.switchfully.domain.user.feature.UserRole.CUSTOMER;
 
 @Repository
 public class UserRepository {
-    private final ConcurrentHashMap<String, User> userDatabase;
+    private final Map<String, User> userDatabase;
 
     public UserRepository() {
         this.userDatabase = new ConcurrentHashMap<>();

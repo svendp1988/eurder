@@ -2,13 +2,28 @@ package com.switchfully.service.item.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.switchfully.domain.item.Item;
-import com.switchfully.domain.item.builders.ItemBuilder;
 
-public class CreateItemDto extends Item {
+public class CreateItemDto {
+    private String name;
+    private String description;
+    private double price;
 
     @JsonCreator
-    public CreateItemDto(@JsonProperty ItemBuilder itemBuilder) {
-        super(itemBuilder);
+    public CreateItemDto(@JsonProperty ItemDtoBuilder itemDtoBuilder) {
+        name = itemDtoBuilder.getName();
+        description = itemDtoBuilder.getDescription();
+        price = itemDtoBuilder.getPrice();
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getPrice() {
+        return price;
     }
 }

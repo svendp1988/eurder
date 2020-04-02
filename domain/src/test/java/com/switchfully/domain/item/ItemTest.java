@@ -12,6 +12,5 @@ class ItemTest {
         assertEquals("name", item.getName());
         assertEquals("description", item.getDescription());
         assertEquals(0.0, item.getPrice());
-        assertEquals(0, item.getAmount());
     }
 }
