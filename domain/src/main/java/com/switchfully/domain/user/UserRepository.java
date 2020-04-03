@@ -62,9 +62,17 @@ public class UserRepository {
 
     private void createDefaultData() {
         User defaultAdmin = userBuilder()
+                .withFirstName("admin")
+                .withLastName("istrator")
                 .withEmail("admin@order.com")
                 .withLastName("Admin")
                 .withPassword("root")
+                .withAddress(addressBuilder()
+                        .withStreet("street")
+                        .withStreetNumber("1")
+                        .withPostalCode("1000")
+                        .withCity("city")
+                        .build())
                 .buildAdmin();
         User defaultCustomer = userBuilder()
                 .withFirstName("Sven")

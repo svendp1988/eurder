@@ -1,13 +1,14 @@
 package com.switchfully.domain.user;
 
 import com.switchfully.domain.exceptions.UserNotFoundException;
-import com.switchfully.domain.testbuilders.TestUserRepository;
+import com.switchfully.domain.user.feature.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.TestComponent;
 
 import static com.switchfully.domain.testbuilders.TestUserBuilder.testUserBuilder;
 import static com.switchfully.domain.user.feature.UserRole.ADMIN;
+import static com.switchfully.domain.user.feature.UserRole.CUSTOMER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -15,46 +16,46 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 @TestComponent
 class UserRepositoryTest {
-    TestUserRepository testUserRepository;
+    UserRepository userRepository;
 
     @BeforeEach
     void init() {
-        testUserRepository = new TestUserRepository();
+        userRepository = new UserRepository();
     }
 
     @Test
     void iCanRegisterAsaCustomer_andANewUser_withTheSameValues_isReturned() {
-        User actualUser = testUserRepository.registerAsCustomer(testUserBuilder().buildCustomer());
+        User actualUser = userRepository.registerAsCustomer(testUserBuilder().buildCustomer());
         assertEquals(testUserBuilder().buildCustomer(), actualUser);
     }
 
     @Test
     void iCanRegisterAsanAdmin_andANewUser_withTheSameValues_isReturned() {
-        User actualAdmin = testUserRepository.registerAsAdmin(testUserBuilder().buildAdmin());
+        User actualAdmin = userRepository.registerAsAdmin(testUserBuilder().buildAdmin());
         assertEquals(testUserBuilder().buildAdmin(), actualAdmin);
     }
 
     @Test
     void oneDefaultAdmin_isAlreadyPresentInTheSystem() {
-        assertThatCode(() -> testUserRepository.getAllUsers().stream().filter(user -> user.getRole().equals(ADMIN)).findFirst())
+        assertThatCode(() -> userRepository.getAllUsers().stream().filter(user -> user.getRole().equals(ADMIN)).findFirst())
                 .doesNotThrowAnyException();
     }
 
     @Test
     void viewAllCustomers_returnsACollectionOfAllCustomersPresent_withoutAdmins() {
-        testUserRepository.populateRepository();
-        assertThat(testUserRepository.getAllCustomers()).contains(testUserBuilder().buildCustomer());
+        assertThat(userRepository.getAllCustomers()).filteredOn(user -> user.getRole().equals(CUSTOMER)).isNotEmpty();
+        assertThat(userRepository.getAllCustomers()).filteredOn(user -> user.getRole().equals(ADMIN)).isEmpty();
     }
 
     @Test
     void viewAllUsers_returnsACollectionOfAllCustomersAndAdminsPresent() {
-        testUserRepository.populateRepository();
-        assertThat(testUserRepository.getAllUsers()).contains(testUserBuilder().buildCustomer(), testUserBuilder().buildAdmin());
+        assertThat(userRepository.getAllUsers()).filteredOn(user -> user.getRole().equals(CUSTOMER)).isNotEmpty();
+        assertThat(userRepository.getAllUsers()).filteredOn(user -> user.getRole().equals(ADMIN)).isNotEmpty();
     }
 
     @Test
     void searchingForAUser_withWrongIdThrowsException() {
-        assertThrows(UserNotFoundException.class, () -> testUserRepository.getById("non_existing_id"));
+        assertThrows(UserNotFoundException.class, () -> userRepository.getById("non_existing_id"));
 
     }
 }

@@ -13,7 +13,7 @@ public class UserBuilder {
     private String password;
     private Address address;
 
-    protected UserBuilder () {
+    private UserBuilder () {
     }
 
     public static UserBuilder userBuilder() {

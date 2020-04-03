@@ -33,7 +33,6 @@ public class Address {
         return city;
     }
 
-    @JsonCreator
     public Address(AddressBuilder addressBuilder) {
         id = UUID.randomUUID().toString();
         street = addressBuilder.getStreet();

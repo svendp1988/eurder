@@ -7,8 +7,9 @@ import com.switchfully.domain.user.feature.UserRole;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import static com.switchfully.domain.testbuilders.TestAddressBuilder.testAddressBuilder;
+import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
 
-public class TestUserBuilder extends UserBuilder {
+public class TestUserBuilder {
     private String firstName = "firstName";
     private String lastName = "lastName";
     private String email = "email";
@@ -24,36 +25,46 @@ public class TestUserBuilder extends UserBuilder {
     }
 
     public User buildCustomer() {
-        role = UserRole.CUSTOMER;
-        return new User(this);
+        return userBuilder()
+                .withFirstName(firstName)
+                .withLastName(lastName)
+                .withEmail(email)
+                .withPassword(password)
+                .withAddress(address)
+                .buildCustomer();
     }
 
     public User buildAdmin() {
-        role = UserRole.ADMIN;
-        return new User(this);
+        return userBuilder()
+                .withFirstName(firstName)
+                .withLastName(lastName)
+                .withEmail(email)
+                .withPassword(password)
+                .withAddress(address)
+                .buildAdmin();
     }
 
-    public UserBuilder withFirstName(String firstName) {
+    public TestUserBuilder withFirstName(String firstName) {
         this.firstName = firstName;
         return this;
     }
 
-    public UserBuilder withLastName(String lastName) {
+    public TestUserBuilder withLastName(String lastName) {
         this.lastName = lastName;
         return this;
     }
 
-    public UserBuilder withEmail(String email) {
+    public TestUserBuilder withEmail(String email) {
         this.email = email;
         return this;
     }
 
-    public UserBuilder withPassword(String password) {
+    public TestUserBuilder withPassword(String password) {
         this.password = hash(password);
         return this;
     }
 
-    public UserBuilder withAddress(Address address) {
+    public TestUserBuilder withAddress(Address address) {
         this.address = address;
         return this;
     }

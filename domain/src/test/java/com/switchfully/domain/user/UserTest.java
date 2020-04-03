@@ -2,6 +2,7 @@ package com.switchfully.domain.user;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import static com.switchfully.domain.testbuilders.TestAddressBuilder.testAddressBuilder;
 import static com.switchfully.domain.testbuilders.TestUserBuilder.testUserBuilder;
@@ -27,7 +28,11 @@ class UserTest {
         assertEquals("lastName", customer.getLastName());
         assertEquals("email", customer.getEmail());
         assertEquals(CUSTOMER, customer.getRole());
-        assertEquals("password", customer.getPassword());
+        assertTrue(verifyHash("password", customer.getPassword()));
         assertEquals(address, customer.getAddress());
+    }
+
+    public boolean verifyHash(String password, String hash) {
+        return BCrypt.checkpw(password, hash);
     }
 }

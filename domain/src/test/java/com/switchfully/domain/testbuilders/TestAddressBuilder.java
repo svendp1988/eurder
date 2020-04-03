@@ -3,7 +3,9 @@ package com.switchfully.domain.testbuilders;
 import com.switchfully.domain.user.Address;
 import com.switchfully.domain.user.builders.AddressBuilder;
 
-public class TestAddressBuilder extends AddressBuilder {
+import static com.switchfully.domain.user.builders.AddressBuilder.addressBuilder;
+
+public class TestAddressBuilder {
     private String street = "street";
     private String streetNumber = "streetNumber";
     private String postalCode = "postalCode";
@@ -17,25 +19,30 @@ public class TestAddressBuilder extends AddressBuilder {
     }
 
     public Address build(){
-        return new Address(this);
+        return addressBuilder()
+                .withStreet(street)
+                .withStreetNumber(streetNumber)
+                .withPostalCode(postalCode)
+                .withCity(city)
+                .build();
     }
 
-    public AddressBuilder withStreet(String street) {
+    public TestAddressBuilder withStreet(String street) {
         this.street = street;
         return this;
     }
 
-    public AddressBuilder withStreetNumber(String streetNumber) {
+    public TestAddressBuilder withStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
         return this;
     }
 
-    public AddressBuilder withPostalCode(String postalCode) {
+    public TestAddressBuilder withPostalCode(String postalCode) {
         this.postalCode = postalCode;
         return this;
     }
 
-    public AddressBuilder withCity(String city) {
+    public TestAddressBuilder withCity(String city) {
         this.city = city;
         return this;
     }

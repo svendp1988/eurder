@@ -10,7 +10,7 @@ public class AddressBuilder {
     private String postalCode;
     private String city;
 
-    protected AddressBuilder() {
+    private AddressBuilder() {
     }
 
     public static AddressBuilder addressBuilder() {
