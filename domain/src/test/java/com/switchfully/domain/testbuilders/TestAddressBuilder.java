@@ -11,7 +11,7 @@ public class TestAddressBuilder {
     private String postalCode = "postalCode";
     private String city = "city";
 
-    protected TestAddressBuilder() {
+    private TestAddressBuilder() {
     }
 
     public static TestAddressBuilder testAddressBuilder() {

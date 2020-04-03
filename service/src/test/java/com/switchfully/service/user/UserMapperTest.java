@@ -6,9 +6,6 @@ import org.junit.jupiter.api.Test;
 import java.util.Collection;
 import java.util.List;
 
-import static com.switchfully.service.testbuilders.TestUserBuilder.testUserBuilder;
-import static org.assertj.core.api.Assertions.assertThat;
-
 
 class UserMapperTest {
 //    UserMapper userMapper = new UserMapper();
@@ -21,18 +18,17 @@ class UserMapperTest {
 
     @Test
     void toUserDto_createsDtoOutOfExistingUser() {
-        User user = testUserBuilder().buildCustomer();
 //        UserDto userDto = new UserDto(user);
 //        assertEquals(userDto, userMapper.toUserDto(user));
     }
 
     @Test
     void toDtoCollection_returnsCollectionOfUserDtos() {
-        User customer = testUserBuilder().buildCustomer();
-        User admin = testUserBuilder().buildAdmin();
+//        User customer = testUserBuilder().buildCustomer();
+//        User admin = testUserBuilder().buildAdmin();
 //        UserDto customerDto = userMapper.toUserDto(customer);
 //        UserDto adminDto = userMapper.toUserDto(admin);
-        Collection<User> userCollection = List.of(customer, admin);
+//        Collection<User> userCollection = List.of(customer, admin);
 //        assertThat(userMapper.toDtoCollection(userCollection)).containsExactlyInAnyOrder(customerDto, adminDto);
     }
 }

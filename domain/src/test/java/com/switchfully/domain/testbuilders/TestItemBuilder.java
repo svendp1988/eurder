@@ -10,7 +10,7 @@ public class TestItemBuilder {
     private String description = "description";
     private double price = 0.0;
 
-    protected TestItemBuilder() {
+    private TestItemBuilder() {
     }
 
     public static TestItemBuilder testItemBuilder() {

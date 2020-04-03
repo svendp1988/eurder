@@ -2,40 +2,48 @@ package com.switchfully.service.testbuilders;
 
 import com.switchfully.domain.user.Address;
 import com.switchfully.domain.user.builders.AddressBuilder;
+import com.switchfully.service.address.AddressDto;
 
-public class TestAddressBuilder extends AddressBuilder {
+import static com.switchfully.service.address.AddressDtoBuilder.addressDtoBuilder;
+
+public class TestAddressDtoBuilder {
     private String street = "street";
     private String streetNumber = "streetNumber";
     private String postalCode = "postalCode";
     private String city = "city";
 
-    protected TestAddressBuilder() {
+    private TestAddressDtoBuilder() {
     }
 
-    public static TestAddressBuilder testAddressBuilder() {
-        return new TestAddressBuilder();
+    public static TestAddressDtoBuilder testAddressDtoBuilder() {
+        return new TestAddressDtoBuilder();
     }
 
-    public Address build(){
-        return new Address(this);
+    public AddressDto build(){
+        return addressDtoBuilder()
+                .withStreet(street)
+                .withStreetNumber(streetNumber)
+                .withPostalCode(postalCode)
+                .withCity(city)
+                .build();
     }
 
-    public AddressBuilder withStreet(String street) {
+    public TestAddressDtoBuilder withStreet(String street) {
         this.street = street;
         return this;
     }
 
-    public AddressBuilder withStreetNumber(String streetNumber) {
+    public TestAddressDtoBuilder withStreetNumber(String streetNumber) {
         this.streetNumber = streetNumber;
         return this;
     }
 
-    public AddressBuilder withPostalCode(String postalCode) {
+    public TestAddressDtoBuilder withPostalCode(String postalCode) {
         this.postalCode = postalCode;
         return this;
     }
 
-    public AddressBuilder withCity(String city) {
+    public TestAddressDtoBuilder withCity(String city) {
         this.city = city;
         return this;
     }

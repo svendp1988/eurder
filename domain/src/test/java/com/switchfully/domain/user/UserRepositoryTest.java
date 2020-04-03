@@ -1,10 +1,8 @@
 package com.switchfully.domain.user;
 
 import com.switchfully.domain.exceptions.UserNotFoundException;
-import com.switchfully.domain.user.feature.UserRole;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.TestComponent;
 
 import static com.switchfully.domain.testbuilders.TestUserBuilder.testUserBuilder;
 import static com.switchfully.domain.user.feature.UserRole.ADMIN;
@@ -14,7 +12,6 @@ import static org.assertj.core.api.Assertions.assertThatCode;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-@TestComponent
 class UserRepositoryTest {
     UserRepository userRepository;
 
@@ -56,6 +53,5 @@ class UserRepositoryTest {
     @Test
     void searchingForAUser_withWrongIdThrowsException() {
         assertThrows(UserNotFoundException.class, () -> userRepository.getById("non_existing_id"));
-
     }
 }

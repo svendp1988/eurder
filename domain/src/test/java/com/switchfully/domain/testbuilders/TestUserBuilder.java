@@ -17,7 +17,7 @@ public class TestUserBuilder {
     private String password = "password";
     private Address address = testAddressBuilder().build();
 
-    protected TestUserBuilder () {
+    private TestUserBuilder () {
     }
 
     public static TestUserBuilder testUserBuilder() {
