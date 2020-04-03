@@ -10,6 +10,8 @@ import com.switchfully.service.user.dto.UserDto;
 import com.switchfully.service.user.role.UserRoleDto;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
+import static com.switchfully.domain.user.builders.AddressBuilder.addressBuilder;
+import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
 import static com.switchfully.service.testbuilders.TestAddressDtoBuilder.testAddressDtoBuilder;
 import static com.switchfully.service.user.dto.UserDtoBuilder.userDtoBuilder;
 
@@ -21,14 +23,14 @@ public class TestUserDtoBuilder {
     private String password = "password";
     private AddressDto address = testAddressDtoBuilder().build();
 
-    private TestUserDtoBuilder () {
+    private TestUserDtoBuilder() {
     }
 
     public static TestUserDtoBuilder testUserDtoBuilder() {
         return new TestUserDtoBuilder();
     }
 
-    public UserDto buildCustomer() {
+    public UserDto buildCustomerDto() {
         return userDtoBuilder()
                 .withFirstName(firstName)
                 .withLastName(lastName)
@@ -39,7 +41,7 @@ public class TestUserDtoBuilder {
                 .buildUserDto();
     }
 
-    public UserDto buildAdmin() {
+    public UserDto buildAdminDto() {
         return userDtoBuilder()
                 .withFirstName(firstName)
                 .withLastName(lastName)
@@ -59,6 +61,36 @@ public class TestUserDtoBuilder {
                 .withPassword(password)
                 .withAddress(address)
                 .buildCreateUserDto();
+    }
+
+    public User buildCustomer() {
+        return userBuilder()
+                .withFirstName(firstName)
+                .withLastName(lastName)
+                .withEmail(email)
+                .withPassword(password)
+                .withAddress(addressBuilder()
+                        .withStreet("street")
+                        .withStreetNumber("streetNumber")
+                        .withPostalCode("1000")
+                        .withCity("city")
+                        .build())
+                .buildCustomer();
+    }
+
+    public User buildAdmin() {
+        return userBuilder()
+                .withFirstName(firstName)
+                .withLastName(lastName)
+                .withEmail(email)
+                .withPassword(password)
+                .withAddress(addressBuilder()
+                        .withStreet("street")
+                        .withStreetNumber("streetNumber")
+                        .withPostalCode("1000")
+                        .withCity("city")
+                        .build())
+                .buildAdmin();
     }
 
     public TestUserDtoBuilder withFirstName(String firstName) {

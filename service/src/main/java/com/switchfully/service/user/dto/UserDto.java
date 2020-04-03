@@ -16,8 +16,7 @@ public class UserDto {
     @JsonView(View.Public.class)
     private String lastName;
     @JsonView(View.Public.class)
-    private String email;
-    private UserRoleDto userRoleDto;
+    private String email;;
     @JsonView(View.Restricted.class)
     private UserRoleDto role;
     @JsonView(View.Restricted.class)
@@ -33,7 +32,7 @@ public class UserDto {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.userRoleDto = userRoleDto;
+        this.role = userRoleDto;
         this.password = password;
         this.addressDto = addressDto;
     }
@@ -58,10 +57,6 @@ public class UserDto {
 
     public String getEmail() {
         return email;
-    }
-
-    public UserRoleDto getUserRoleDto() {
-        return userRoleDto;
     }
 
     public UserRoleDto getRole() {
