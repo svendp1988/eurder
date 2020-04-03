@@ -1,6 +1,7 @@
 package com.switchfully.service.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
+import com.switchfully.domain.user.feature.UserRole;
 import com.switchfully.service.address.AddressDto;
 import com.switchfully.service.user.role.UserRoleDto;
 import com.switchfully.service.user.view.View;
@@ -16,6 +17,7 @@ public class UserDto {
     private String lastName;
     @JsonView(View.Public.class)
     private String email;
+    private UserRoleDto userRoleDto;
     @JsonView(View.Restricted.class)
     private UserRoleDto role;
     @JsonView(View.Restricted.class)
@@ -26,6 +28,16 @@ public class UserDto {
     public UserDto() {
     }
 
+    public UserDto(String id, String firstName, String lastName, String email, UserRoleDto userRoleDto, String password, AddressDto addressDto) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.userRoleDto = userRoleDto;
+        this.password = password;
+        this.addressDto = addressDto;
+    }
+
     public UserDto(UserDtoBuilder userDtoBuilder) {
         this.id = userDtoBuilder.getId();
         this.firstName = userDtoBuilder.getFirstName();
@@ -34,6 +46,34 @@ public class UserDto {
         this.role = userDtoBuilder.getRole();
         this.password = userDtoBuilder.getPassword();
         this.addressDto = userDtoBuilder.getAddress();
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public UserRoleDto getUserRoleDto() {
+        return userRoleDto;
+    }
+
+    public UserRoleDto getRole() {
+        return role;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public AddressDto getAddressDto() {
+        return addressDto;
     }
 
     @Override

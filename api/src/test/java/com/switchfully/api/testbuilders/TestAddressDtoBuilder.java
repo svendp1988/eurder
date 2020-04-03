@@ -4,7 +4,9 @@ import com.switchfully.domain.user.builders.AddressBuilder;
 import com.switchfully.service.address.AddressDto;
 import com.switchfully.service.address.AddressDtoBuilder;
 
-public class TestAddressDtoBuilder extends AddressDtoBuilder {
+import static com.switchfully.service.address.AddressDtoBuilder.addressDtoBuilder;
+
+public class TestAddressDtoBuilder {
     private String street = "street";
     private String streetNumber = "streetNumber";
     private String postalCode = "postalCode";
@@ -17,8 +19,13 @@ public class TestAddressDtoBuilder extends AddressDtoBuilder {
         return new TestAddressDtoBuilder();
     }
 
-    public AddressDto build(){
-        return new AddressDto(this);
+    public AddressDto buildAddressDto(){
+        return addressDtoBuilder()
+                .withStreet(street)
+                .withStreetNumber(streetNumber)
+                .withPostalCode(postalCode)
+                .withCity(city)
+                .build();
     }
 
     public TestAddressDtoBuilder withStreet(String street) {

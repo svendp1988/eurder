@@ -14,6 +14,14 @@ public class CreateUserDto {
     public CreateUserDto() {
     }
 
+    public CreateUserDto(String firstName, String lastName, String email, String password, AddressDto addressDto) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
+        this.addressDto = addressDto;
+    }
+
     public CreateUserDto(UserDtoBuilder userDtoBuilder) {
         this.firstName = userDtoBuilder.getFirstName();
         this.lastName = userDtoBuilder.getLastName();

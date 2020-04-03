@@ -18,12 +18,12 @@ public class AddressMapper {
     }
 
     public AddressDto toDto(Address address) {
-        return addressDtoBuilder()
-                .withStreet(address.getStreet())
-                .withStreetNumber(address.getStreetNumber())
-                .withPostalCode(address.getPostalCode())
-                .withCity(address.getCity())
-                .build();
+        return new AddressDto(
+                address.getStreet(),
+                address.getStreetNumber(),
+                address.getPostalCode(),
+                address.getCity()
+        );
     }
 }
 

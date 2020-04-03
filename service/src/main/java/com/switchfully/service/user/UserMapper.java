@@ -36,15 +36,15 @@ public class UserMapper {
     }
 
     public UserDto toUserDto(User user) {
-        return userDtoBuilder()
-                .withId(user.getId())
-                .withFirstName(user.getFirstName())
-                .withLastName(user.getLastName())
-                .withEmail(user.getEmail())
-                .withPassword(user.getPassword())
-                .withRole(userRoleMapper.toDto(user.getRole()))
-                .withAddress(addressMapper.toDto(user.getAddress()))
-                .buildUserDto();
+        return new UserDto(
+                user.getId(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getEmail(),
+                userRoleMapper.toDto(user.getRole()),
+                user.getPassword(),
+                addressMapper.toDto(user.getAddress())
+        );
     }
 
     public Collection<UserDto> toDtoCollection(Collection<User> memberCollection) {

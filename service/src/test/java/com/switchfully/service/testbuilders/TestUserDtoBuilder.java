@@ -5,6 +5,7 @@ import com.switchfully.domain.user.User;
 import com.switchfully.domain.user.builders.UserBuilder;
 import com.switchfully.domain.user.feature.UserRole;
 import com.switchfully.service.address.AddressDto;
+import com.switchfully.service.user.dto.CreateUserDto;
 import com.switchfully.service.user.dto.UserDto;
 import com.switchfully.service.user.role.UserRoleDto;
 import org.springframework.security.crypto.bcrypt.BCrypt;
@@ -16,7 +17,7 @@ public class TestUserDtoBuilder {
     private String firstName = "firstName";
     private String lastName = "lastName";
     private String email = "email";
-    private UserRole role;
+    private UserRoleDto role;
     private String password = "password";
     private AddressDto address = testAddressDtoBuilder().build();
 
@@ -47,6 +48,17 @@ public class TestUserDtoBuilder {
                 .withPassword(password)
                 .withAddress(address)
                 .buildUserDto();
+    }
+
+    public CreateUserDto buildCreateUserDto() {
+        return userDtoBuilder()
+                .withFirstName(firstName)
+                .withLastName(lastName)
+                .withEmail(email)
+                .withRole(role)
+                .withPassword(password)
+                .withAddress(address)
+                .buildCreateUserDto();
     }
 
     public TestUserDtoBuilder withFirstName(String firstName) {
