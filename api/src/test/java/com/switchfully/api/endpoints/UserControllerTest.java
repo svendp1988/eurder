@@ -1,29 +1,39 @@
 package com.switchfully.api.endpoints;
 
-import com.switchfully.domain.user.UserRepository;
-import com.switchfully.service.address.AddressMapper;
-import com.switchfully.service.user.UserMapper;
 import com.switchfully.service.user.UserService;
 import com.switchfully.service.user.dto.CreateUserDto;
 import com.switchfully.service.user.dto.UserDto;
-import com.switchfully.service.user.role.UserRoleMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static com.switchfully.api.testbuilders.TestUserDtoBuilder.testUserDtoBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
 
+@RunWith(MockitoJUnitRunner.class)
 class UserControllerTest {
 
     CreateUserDto newCustomer = testUserDtoBuilder().buildCreateUserDto();
     UserDto userDto = testUserDtoBuilder().buildCustomerDto();
-    UserRepository userRepository = new UserRepository();
-    UserMapper userMapper = new UserMapper(new AddressMapper(), new UserRoleMapper());
-    UserService userService = new UserService(new UserRepository(), new UserMapper(new AddressMapper(), new UserRoleMapper()));
-    UserController userController = new UserController(userService);
+//
+//    @Mock
+//    UserRepository userRepository = new UserRepository();
+//    @Mock
+//    UserMapper userMapper = new UserMapper(new AddressMapper(), new UserRoleMapper());
+//    = new UserService(new UserRepository(), new UserMapper(new AddressMapper(), new UserRoleMapper()));
+
+//    UserService userService = Mockito.mock(UserService.class);
+    UserController userController;
 
     @Test
     void registeringANewCustomer_returnsDtoHoldingTheSameData() {
-        UserDto actualDto = userController.register(newCustomer);
-        assertThat(actualDto).isEqualTo(userDto);
+        UserService userService = Mockito.mock(UserService.class);
+        UserController userController = new UserController(userService);
+        when(userService.registerAsCustomer(newCustomer)).thenReturn(userDto);
+        assertThat(userController.register(newCustomer)).isEqualTo(userDto);
     }
 }
