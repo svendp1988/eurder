@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.TestComponent;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static com.switchfully.api.testbuilders.TestUserBuilder.testUserBuilder;
+import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
 
 @TestComponent
 public class TestUserRepository extends UserRepository {
@@ -19,8 +19,8 @@ public class TestUserRepository extends UserRepository {
 
 
     public void populateRepository() {
-        registerAsCustomer(testUserBuilder().buildCustomer());
-        registerAsAdmin(testUserBuilder().buildAdmin());
+        registerAsCustomer(userBuilder().buildCustomer());
+        registerAsAdmin(userBuilder().buildAdmin());
     }
 
     public Map<String, User> getUserDatabase() {

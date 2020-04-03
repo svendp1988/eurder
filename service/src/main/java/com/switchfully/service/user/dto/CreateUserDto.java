@@ -1,16 +1,19 @@
 package com.switchfully.service.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.switchfully.service.address.AddressDto;
 
 public class CreateUserDto {
-    private final String firstName;
-    private final String lastName;
-    private final String email;
-    private final String password;
-    private final AddressDto addressDto;
+    private String firstName;
+    private String lastName;
+    private String email;
+    private String password;
+    private AddressDto addressDto;
 
-    @JsonCreator
+    public CreateUserDto() {
+    }
+
     public CreateUserDto(UserDtoBuilder userDtoBuilder) {
         this.firstName = userDtoBuilder.getFirstName();
         this.lastName = userDtoBuilder.getLastName();
@@ -38,4 +41,5 @@ public class CreateUserDto {
     public AddressDto getAddressDto() {
         return addressDto;
     }
+
 }

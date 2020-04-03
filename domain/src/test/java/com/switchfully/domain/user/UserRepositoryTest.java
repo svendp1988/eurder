@@ -43,7 +43,7 @@ class UserRepositoryTest {
     @Test
     void viewAllCustomers_returnsACollectionOfAllCustomersPresent_withoutAdmins() {
         testUserRepository.populateRepository();
-        assertThat(testUserRepository.getAllCustomers()).containsExactly(testUserBuilder().buildCustomer());
+        assertThat(testUserRepository.getAllCustomers()).contains(testUserBuilder().buildCustomer());
     }
 
     @Test

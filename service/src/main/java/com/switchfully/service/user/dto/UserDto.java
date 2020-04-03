@@ -9,19 +9,22 @@ import java.util.Objects;
 
 public class UserDto {
     @JsonView(View.Public.class)
-    private final String id;
+    private String id;
     @JsonView(View.Public.class)
-    private final String firstName;
+    private String firstName;
     @JsonView(View.Public.class)
-    private final String lastName;
+    private String lastName;
     @JsonView(View.Public.class)
-    private final String email;
+    private String email;
     @JsonView(View.Restricted.class)
-    private final UserRoleDto role;
+    private UserRoleDto role;
     @JsonView(View.Restricted.class)
     private String password;
     @JsonView(View.Restricted.class)
     private AddressDto addressDto;
+
+    public UserDto() {
+    }
 
     public UserDto(UserDtoBuilder userDtoBuilder) {
         this.id = userDtoBuilder.getId();

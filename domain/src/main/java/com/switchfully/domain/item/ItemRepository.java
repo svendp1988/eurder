@@ -25,4 +25,11 @@ public class ItemRepository {
         return itemDatabase.entrySet().stream()
                 .collect(Collectors.toMap(entry -> entry.getKey().getName(), Map.Entry::getValue));
     }
+
+    public Item getItemByName(String name) {
+        return itemDatabase.keySet().stream()
+                .filter(item -> item.getName().equals(name))
+                .findFirst()
+                .orElseThrow();
+    }
 }

@@ -10,10 +10,10 @@ import static com.switchfully.service.address.AddressDtoBuilder.addressDtoBuilde
 public class AddressMapper {
     public Address toAddress(AddressDto addressDto) {
         return addressBuilder()
-                .withStreet(addressDto.street)
-                .withStreetNumber(addressDto.streetNumber)
-                .withPostalCode(addressDto.postalCode)
-                .withCity(addressDto.city)
+                .withStreet(addressDto.getStreet())
+                .withStreetNumber(addressDto.getStreetNumber())
+                .withPostalCode(addressDto.getPostalCode())
+                .withCity(addressDto.getCity())
                 .build();
     }
 

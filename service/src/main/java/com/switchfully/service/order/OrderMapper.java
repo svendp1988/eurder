@@ -3,33 +3,34 @@ package com.switchfully.service.order;
 import com.switchfully.domain.item.Item;
 import com.switchfully.domain.order.Order;
 import com.switchfully.service.item.ItemMapper;
+import com.switchfully.service.item.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static java.util.stream.Collectors.*;
-
 @Component
 public class OrderMapper {
     private ItemMapper itemMapper;
+    private ItemService itemService;
 
     @Autowired
-    public OrderMapper(ItemMapper itemMapper) {
+    public OrderMapper(ItemMapper itemMapper, ItemService itemService) {
         this.itemMapper = itemMapper;
+        this.itemService = itemService;
     }
 
-    public Order toNewOrder(CreateOrderDto createOrderDto) {
-        Map<Item, Integer> orders = new ConcurrentHashMap<>();
-        createOrderDto.getItems()
-                .forEach(item -> {
-                    Item key = itemMapper.toNewItem(item);
-                    orders.put(key, orders.get(key) == null ? 1 : orders.get(key) + 1);
-                });
-        return new Order(orders);
+    public Order toNewOrder(List<String> items) {
+//        Map<Item, Integer> orders = new ConcurrentHashMap<>();
+//        orders = items.stream()
+//                .map(item -> itemService.getItemByName(item))
+////                .collect(Collectors.groupingBy(Function.identity(), item -> orders.get(item) == null ? 1 : orders.get(item) + 1));
+        return null; //new Order(orders);
+
     }
 
     public OrderDto toDto(Order order) {

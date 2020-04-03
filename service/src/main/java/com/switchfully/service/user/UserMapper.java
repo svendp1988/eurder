@@ -44,7 +44,7 @@ public class UserMapper {
                 .withPassword(user.getPassword())
                 .withRole(userRoleMapper.toDto(user.getRole()))
                 .withAddress(addressMapper.toDto(user.getAddress()))
-                .build();
+                .buildUserDto();
     }
 
     public Collection<UserDto> toDtoCollection(Collection<User> memberCollection) {

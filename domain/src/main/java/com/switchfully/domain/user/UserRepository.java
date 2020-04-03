@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+import static com.switchfully.domain.user.builders.AddressBuilder.addressBuilder;
 import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
 import static com.switchfully.domain.user.feature.UserRole.CUSTOMER;
 
@@ -65,6 +66,19 @@ public class UserRepository {
                 .withLastName("Admin")
                 .withPassword("root")
                 .buildAdmin();
+        User defaultCustomer = userBuilder()
+                .withFirstName("Sven")
+                .withLastName("De Potter")
+                .withEmail("sven@order.com")
+                .withPassword("awesome")
+                .withAddress(addressBuilder()
+                        .withStreet("Sint-TrudoStraat")
+                        .withStreetNumber("7A")
+                        .withPostalCode("3891")
+                        .withCity("Buvingen")
+                        .build())
+                .buildCustomer();
         registerAsAdmin(defaultAdmin);
+        registerAsCustomer(defaultCustomer);
     }
 }

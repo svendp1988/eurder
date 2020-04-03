@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,9 +30,9 @@ public class OrderController {
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "Placing an order", notes = "Customers can place orders.", response = OrderDto.class)
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto addOrder(Authentication authentication, @RequestBody CreateOrderDto createOrderDto) {
+    public OrderDto addOrder(Authentication authentication, @RequestBody List<String> items) {
         LOGGER.info("Adding an order");
-        return orderService.addOrder(authentication, createOrderDto);
+        return orderService.addOrder(authentication, items);
     }
 
     @GetMapping(produces = "application/json")

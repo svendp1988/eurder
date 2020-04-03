@@ -19,8 +19,12 @@ public class UserDtoBuilder {
         return new UserDtoBuilder();
     }
 
-    public UserDto build() {
+    public UserDto buildUserDto() {
         return new UserDto(this);
+    }
+
+    public CreateUserDto buildCreateUserDto() {
+        return new CreateUserDto(this);
     }
 
     public UserDtoBuilder withId(String id) {

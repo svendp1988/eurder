@@ -1,15 +1,14 @@
 package com.switchfully.service.address;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.switchfully.service.address.AddressDtoBuilder;
-
 public class AddressDto {
-    String street;
-    String streetNumber;
-    String postalCode;
-    String city;
+    private String street;
+    private String streetNumber;
+    private String postalCode;
+    private String city;
 
-    @JsonCreator
+    public AddressDto() {
+    }
+
     public AddressDto(AddressDtoBuilder addressDtoBuilder) {
         this.street = addressDtoBuilder.getStreet();
         this.streetNumber = addressDtoBuilder.getStreetNumber();
@@ -17,5 +16,19 @@ public class AddressDto {
         this.city = addressDtoBuilder.getCity();
     }
 
+    public String getStreet() {
+        return street;
+    }
 
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getCity() {
+        return city;
+    }
 }

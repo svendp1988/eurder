@@ -1,5 +1,6 @@
 package com.switchfully.service.item;
 
+import com.switchfully.domain.item.Item;
 import com.switchfully.domain.item.ItemRepository;
 import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
@@ -27,5 +28,9 @@ public class ItemService {
 
     public Map<String, Integer> viewAllItems() {
         return itemRepository.viewAllItems();
+    }
+
+    public Item getItemByName(String name) {
+        return itemRepository.getItemByName(name);
     }
 }
