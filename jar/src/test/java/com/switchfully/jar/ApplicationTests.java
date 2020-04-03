@@ -51,4 +51,21 @@ class ApplicationTests {
                 .expectHeader().valueEquals("Content-Type", "application/json")
                 .expectBody(UserDto.class);
     }
+
+    @Test
+    void tryingToViewAllCustomers_withoutCorrectAuthentication_shouldResultInError() {
+        WebTestClient
+                .bindToServer()
+                .baseUrl("http://localhost:8080")
+                .defaultHeaders(header -> header.setBasicAuth("incorrect_email", "incorrect_password"))
+                .defaultHeaders(header -> header.setAccept(newArrayList(APPLICATION_JSON)))
+                .defaultHeaders(header -> header.setContentType(APPLICATION_JSON))
+                .build()
+                .get()
+                .uri("/customers")
+                .exchange()
+                .expectStatus().isForbidden()
+                .expectHeader().valueEquals("Content-Type", "application/json")
+                .expectBody().json("You don't have the rights to do that.");
+    }
 }
