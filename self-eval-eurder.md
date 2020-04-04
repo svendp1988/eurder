@@ -69,7 +69,7 @@ Which choices did you make? (List your choices below, remove what is not relevan
 - [x] The functional requirements are implemented
  - [x] The requirements are tested with Postman
  - [x] The requirements are unit tested
- - [ ] The requirements are integration tested -> unittested + tested with postman
+ - [x] The requirements are integration tested
  - [x] Proper logging is setup
  - [x] I did a "codereview" of my own code before declaring it "done".
 ### Comments: 
@@ -77,7 +77,7 @@ Which choices did you make? (List your choices below, remove what is not relevan
 - [x] The functional requirements are implemented
  - [x] The requirements are tested with Postman
  - [x] The requirements are unit tested
- - [ ] The requirements are integration tested -> unittested + tested with postman
+ - [x] The requirements are integration tested -> unittested + tested with postman
  - [x] Proper logging is setup
  - [x] I did a "codereview" of my own code before declaring it "done".
 ### Comments: 

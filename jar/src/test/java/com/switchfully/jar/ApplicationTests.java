@@ -82,6 +82,26 @@ class ApplicationTests {
                     .expectBody().jsonPath("$.message").isEqualTo("You don't have the rights to do that.");
         }
 
+        @Test
+        @DisplayName("View a single customers without correct authentication")
+        void tryingToViewASingleCustomers_withoutCorrectAuthentication_shouldResultInError() {
+            WebTestClient
+                    .bindToServer()
+                    .baseUrl("http://localhost:8080")
+                    .defaultHeaders(header -> header.setBasicAuth("sven@order.com", "awesome"))
+                    .defaultHeaders(header -> header.setAccept(newArrayList(APPLICATION_JSON)))
+                    .defaultHeaders(header -> header.setContentType(APPLICATION_JSON))
+                    .build()
+                    .get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path("/customers")
+                            .queryParam("id", "someId")
+                            .build())
+                    .exchange()
+                    .expectStatus().isForbidden()
+                    .expectBody().jsonPath("$.message").isEqualTo("You don't have the rights to do that.");
+        }
+
     }
 
     @Nested
