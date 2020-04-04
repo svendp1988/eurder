@@ -78,8 +78,7 @@ class ApplicationTests {
                     .get()
                     .uri("/customers")
                     .exchange()
-                    .expectStatus().isUnauthorized()
-                    .expectBody().json("You don't have the rights to do that.");
+                    .expectStatus().isUnauthorized();
         }
 
     }
