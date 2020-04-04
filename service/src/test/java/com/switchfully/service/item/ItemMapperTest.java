@@ -1,9 +1,11 @@
-package com.switchfully.service.item.dto;
+package com.switchfully.service.item;
 
 import com.switchfully.domain.item.Item;
 import com.switchfully.domain.item.ItemRepository;
 import com.switchfully.service.item.ItemMapper;
 import com.switchfully.service.item.ItemService;
+import com.switchfully.service.item.dto.CreateItemDto;
+import com.switchfully.service.item.dto.ItemDto;
 import org.junit.jupiter.api.Test;
 
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
