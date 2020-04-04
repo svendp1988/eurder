@@ -79,7 +79,7 @@ class ApplicationTests {
                     .uri("/customers")
                     .exchange()
                     .expectStatus().isForbidden()
-                    .expectBody().jsonPath("$.message").isEqualTo("\"You don't have the rights to do that.\"");
+                    .expectBody().jsonPath("$.message").isEqualTo("You don't have the rights to do that.");
         }
 
     }
