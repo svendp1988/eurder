@@ -19,11 +19,11 @@ public class ItemMapper {
     }
 
     public ItemDto toItemDto(Item item) {
-        return itemDtoBuilder()
-                .withId(item.getId())
-                .withName(item.getName())
-                .withDescription(item.getDescription())
-                .withPrice(item.getPrice())
-                .buildItemDto();
+        return new ItemDto(
+                item.getId(),
+                item.getName(),
+                item.getDescription(),
+                item.getPrice()
+        );
     }
 }

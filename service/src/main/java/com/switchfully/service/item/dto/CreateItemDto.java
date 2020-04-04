@@ -8,8 +8,16 @@ public class CreateItemDto {
     private String description;
     private double price;
 
-    @JsonCreator
-    public CreateItemDto(@JsonProperty ItemDtoBuilder itemDtoBuilder) {
+    public CreateItemDto() {
+    }
+
+    public CreateItemDto(String name, String description, double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
+
+    public CreateItemDto(ItemDtoBuilder itemDtoBuilder) {
         name = itemDtoBuilder.getName();
         description = itemDtoBuilder.getDescription();
         price = itemDtoBuilder.getPrice();

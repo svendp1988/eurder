@@ -9,6 +9,7 @@ import static com.google.common.collect.Lists.newArrayList;
 
 public enum Feature {
     ADD_ITEM(UserRole.ADMIN),
+    GET_ITEM_BY_NAME(UserRole.CUSTOMER),
     ORDER_ITEM(UserRole.CUSTOMER),
     VIEW_CUSTOMERS(UserRole.ADMIN);
 

@@ -9,7 +9,7 @@ public class ItemDtoBuilder {
     private String description;
     private double price;
 
-    protected ItemDtoBuilder() {
+    private ItemDtoBuilder() {
     }
 
     public static ItemDtoBuilder itemDtoBuilder() {

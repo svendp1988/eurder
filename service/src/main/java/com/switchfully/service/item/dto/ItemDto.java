@@ -11,17 +11,42 @@ import com.switchfully.service.user.view.View;
 import java.util.Objects;
 
 public class ItemDto {
-    private final String id;
-    private final String name;
-    private final String description;
-    private final double price;
+    private String id;
+    private String name;
+    private String description;
+    private double price;
 
+    public ItemDto() {
+    }
+
+    public ItemDto(String id, String name, String description, double price) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 
     public ItemDto(ItemDtoBuilder itemDtoBuilder) {
         id = itemDtoBuilder.getId();
         name = itemDtoBuilder.getName();
         description = itemDtoBuilder.getDescription();
         price = itemDtoBuilder.getPrice();
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     @Override
