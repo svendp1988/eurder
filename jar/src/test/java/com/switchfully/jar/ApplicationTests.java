@@ -71,14 +71,15 @@ class ApplicationTests {
             WebTestClient
                     .bindToServer()
                     .baseUrl("http://localhost:8080")
-                    .defaultHeaders(header -> header.setBasicAuth("incorrect_email", "incorrect_password"))
+                    .defaultHeaders(header -> header.setBasicAuth("sven@order.com", "awesome"))
                     .defaultHeaders(header -> header.setAccept(newArrayList(APPLICATION_JSON)))
                     .defaultHeaders(header -> header.setContentType(APPLICATION_JSON))
                     .build()
                     .get()
                     .uri("/customers")
                     .exchange()
-                    .expectStatus().isUnauthorized();
+                    .expectStatus().isForbidden()
+                    .expectBody().jsonPath("$.message").isEqualTo("\"You don't have the rights to do that.\"");
         }
 
     }

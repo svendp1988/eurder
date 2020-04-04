@@ -254,3 +254,70 @@ Action:
 Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
 
 2020-04-04 11:07:38.264  INFO 76668 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-04-04 18:40:33.005  INFO 40796 --- [main] com.switchfully.jar.Application          : Starting Application on PF1K7ZPB with PID 40796 (C:\Users\11900435\Documents\switchfully\eurder\jar\target\classes started by 11900435 in C:\Users\11900435\Documents\switchfully\eurder)
+2020-04-04 18:40:33.008  INFO 40796 --- [main] com.switchfully.jar.Application          : No active profile set, falling back to default profiles: default
+2020-04-04 18:40:34.068  INFO 40796 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:34.073  INFO 40796 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:34.075  INFO 40796 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@b887730' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:34.080  INFO 40796 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:34.085  INFO 40796 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:34.316  INFO 40796 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8080 (http)
+2020-04-04 18:40:34.326  INFO 40796 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-04-04 18:40:34.326  INFO 40796 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-04-04 18:40:34.413  INFO 40796 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2020-04-04 18:40:34.413  INFO 40796 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1348 ms
+2020-04-04 18:40:35.509  INFO 40796 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-04-04 18:40:35.651  INFO 40796 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@3af10d0b, org.springframework.security.web.context.SecurityContextPersistenceFilter@1b37fbec, org.springframework.security.web.header.HeaderWriterFilter@8c0a23f, org.springframework.security.web.authentication.logout.LogoutFilter@b5aa65b, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@2aa14ae6, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@bb3ecfe, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@582e9152, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@6806468e, org.springframework.security.web.session.SessionManagementFilter@6a1568d6, org.springframework.security.web.access.ExceptionTranslationFilter@69796bd0, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@560271a1]
+2020-04-04 18:40:35.723  INFO 40796 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-04 18:40:36.205  INFO 40796 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-04-04 18:40:36.221  INFO 40796 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-04-04 18:40:36.264  INFO 40796 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-04-04 18:40:36.412  INFO 40796 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getAllMembersUsingGET_1
+2020-04-04 18:40:36.693  INFO 40796 --- [main] o.apache.catalina.core.StandardService   : Stopping service [Tomcat]
+2020-04-04 18:40:36.705  INFO 40796 --- [main] ConditionEvaluationReportLoggingListener : 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2020-04-04 18:40:36.707 ERROR 40796 --- [main] o.s.b.d.LoggingFailureAnalysisReporter   : 
+
+***************************
+APPLICATION FAILED TO START
+***************************
+
+Description:
+
+Web server failed to start. Port 8080 was already in use.
+
+Action:
+
+Identify and stop the process that's listening on port 8080 or configure this application to listen on another port.
+
+2020-04-04 18:40:36.730  INFO 40796 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Shutting down ExecutorService 'applicationTaskExecutor'
+2020-04-04 18:40:49.240  INFO 9212 --- [main] com.switchfully.jar.Application          : Starting Application on PF1K7ZPB with PID 9212 (C:\Users\11900435\Documents\switchfully\eurder\jar\target\classes started by 11900435 in C:\Users\11900435\Documents\switchfully\eurder)
+2020-04-04 18:40:49.244  INFO 9212 --- [main] com.switchfully.jar.Application          : No active profile set, falling back to default profiles: default
+2020-04-04 18:40:50.298  INFO 9212 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration' of type [org.springframework.security.config.annotation.configuration.ObjectPostProcessorConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:50.308  INFO 9212 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'objectPostProcessor' of type [org.springframework.security.config.annotation.configuration.AutowireBeanFactoryObjectPostProcessor] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:50.310  INFO 9212 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler@4821aa9f' of type [org.springframework.security.access.expression.method.DefaultMethodSecurityExpressionHandler] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:50.310  INFO 9212 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration' of type [org.springframework.security.config.annotation.method.configuration.GlobalMethodSecurityConfiguration] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:50.315  INFO 9212 --- [main] trationDelegate$BeanPostProcessorChecker : Bean 'methodSecurityMetadataSource' of type [org.springframework.security.access.method.DelegatingMethodSecurityMetadataSource] is not eligible for getting processed by all BeanPostProcessors (for example: not eligible for auto-proxying)
+2020-04-04 18:40:50.495  INFO 9212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port(s): 8081 (http)
+2020-04-04 18:40:50.498  INFO 9212 --- [main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2020-04-04 18:40:50.498  INFO 9212 --- [main] org.apache.catalina.core.StandardEngine  : Starting Servlet engine: [Apache Tomcat/9.0.31]
+2020-04-04 18:40:50.584  INFO 9212 --- [main] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring embedded WebApplicationContext
+2020-04-04 18:40:50.584  INFO 9212 --- [main] o.s.web.context.ContextLoader            : Root WebApplicationContext: initialization completed in 1286 ms
+2020-04-04 18:40:51.699  INFO 9212 --- [main] pertySourcedRequestMappingHandlerMapping : Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2020-04-04 18:40:51.800  INFO 9212 --- [main] o.s.s.web.DefaultSecurityFilterChain     : Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@28fc1132, org.springframework.security.web.context.SecurityContextPersistenceFilter@1d2fb82, org.springframework.security.web.header.HeaderWriterFilter@6df4af5, org.springframework.security.web.authentication.logout.LogoutFilter@2fd1ad8a, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@4c38cd16, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3db65c0d, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@8c0a23f, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@355ce6a6, org.springframework.security.web.session.SessionManagementFilter@7e5efcab, org.springframework.security.web.access.ExceptionTranslationFilter@4966bab1, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@6af65f29]
+2020-04-04 18:40:51.874  INFO 9212 --- [main] o.s.s.concurrent.ThreadPoolTaskExecutor  : Initializing ExecutorService 'applicationTaskExecutor'
+2020-04-04 18:40:52.339  INFO 9212 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Context refreshed
+2020-04-04 18:40:52.342  INFO 9212 --- [main] d.s.w.p.DocumentationPluginsBootstrapper : Found 1 custom documentation plugin(s)
+2020-04-04 18:40:52.375  INFO 9212 --- [main] s.d.s.w.s.ApiListingReferenceScanner     : Scanning for api listing references
+2020-04-04 18:40:52.499  INFO 9212 --- [main] .d.s.w.r.o.CachingOperationNameGenerator : Generating unique operation named: getAllMembersUsingGET_1
+2020-04-04 18:40:52.797  INFO 9212 --- [main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port(s): 8081 (http) with context path '/api'
+2020-04-04 18:40:52.802  INFO 9212 --- [main] com.switchfully.jar.Application          : Started Application in 3.889 seconds (JVM running for 4.66)
+2020-04-04 18:41:30.066  INFO 9212 --- [http-nio-8081-exec-2] o.a.c.c.C.[Tomcat].[localhost].[/api]    : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2020-04-04 18:41:30.067  INFO 9212 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2020-04-04 18:41:30.074  INFO 9212 --- [http-nio-8081-exec-2] o.s.web.servlet.DispatcherServlet        : Completed initialization in 7 ms
+2020-04-04 18:41:30.133  INFO 9212 --- [http-nio-8081-exec-2] c.s.api.endpoints.ItemController         : Returning all items
+2020-04-04 18:42:58.620  WARN 9212 --- [http-nio-8081-exec-7] c.s.a.e.CustomAccessDeniedHandler        : User: sven@order.com attempted to access the protected URL: /api/items
+2020-04-04 18:43:45.039  WARN 9212 --- [http-nio-8081-exec-8] c.s.a.e.CustomAccessDeniedHandler        : User: sven@order.com attempted to access the protected URL: /api/customers
+2020-04-04 18:43:58.485  WARN 9212 --- [http-nio-8081-exec-3] c.s.a.e.CustomAccessDeniedHandler        : User: sven@order.com attempted to access the protected URL: /api/customers
+2020-04-04 18:44:42.337  WARN 9212 --- [http-nio-8081-exec-10] c.s.a.e.CustomAccessDeniedHandler        : User: sven@order.com attempted to access the protected URL: /api/customers
