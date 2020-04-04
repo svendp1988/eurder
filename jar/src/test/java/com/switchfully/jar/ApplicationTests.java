@@ -78,7 +78,7 @@ class ApplicationTests {
                     .get()
                     .uri("/customers")
                     .exchange()
-                    .expectStatus().isForbidden()
+                    .expectStatus().isUnauthorized()
                     .expectHeader().valueEquals("Content-Type", "application/json")
                     .expectBody().json("You don't have the rights to do that.");
         }
