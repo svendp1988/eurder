@@ -25,12 +25,12 @@ public class OrderService {
         this.userMapper = userMapper;
     }
 
-    public OrderDto addOrder(Authentication authentication, List<String> items) {
+    public OrderDto addOrder(Authentication authentication, String itemId, int amount) {
         String userId = getUserId(authentication);
-        return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(items)));
+        return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(itemId, amount)));
     }
 
-    private String getUserId(Authentication authentication) {
+    public String getUserId(Authentication authentication) {
         return userMapper.toUserDto(userRepository.getAllCustomers().stream()
                 .filter(user -> user.getEmail().equals(authentication.getName()))
                 .findFirst()

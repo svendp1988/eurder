@@ -1,6 +1,5 @@
 package com.switchfully.api.endpoints;
 
-import com.switchfully.service.order.CreateOrderDto;
 import com.switchfully.service.order.OrderDto;
 import com.switchfully.service.order.OrderService;
 import io.swagger.annotations.ApiOperation;
@@ -30,9 +29,9 @@ public class OrderController {
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "Placing an order", notes = "Customers can place orders.", response = OrderDto.class)
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto addOrder(Authentication authentication, @RequestBody List<String> items) {
+    public OrderDto addOrder(Authentication authentication, @RequestBody String itemId, int amount) {
         LOGGER.info("Adding an order");
-        return orderService.addOrder(authentication, items);
+        return orderService.addOrder(authentication, itemId, amount);
     }
 
     @GetMapping(produces = "application/json")

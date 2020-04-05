@@ -43,12 +43,12 @@ public class ItemController {
         return itemService.viewAllItems();
     }
 
-    @PreAuthorize("hasAuthority('GET_ITEM_BY_NAME')")
-    @GetMapping(params = "{name}", produces = "application/json")
-    @ApiOperation(value = "Getting item by name", notes = "Customers can get items by name.", response = ItemDto.class)
+    @PreAuthorize("hasAuthority('GET_ITEM_BY_ID')")
+    @GetMapping(params = "{id}", produces = "application/json")
+    @ApiOperation(value = "Getting item by id", notes = "Customers can get items by id.", response = ItemDto.class)
     @ResponseStatus(HttpStatus.OK)
-    public ItemDto getItemByName(@RequestParam String name) {
-        LOGGER.info("Returning item by name.");
-        return itemService.getItemByName(name);
+    public ItemDto getItemById(@RequestParam String id) {
+        LOGGER.info("Returning item by id.");
+        return itemService.getItemById(id);
     }
 }

@@ -1,13 +1,9 @@
 package com.switchfully.api.security;
 
-//import com.switchfully.api.endpoints.BookController; //TODO: change to correct endpoints
-//import com.switchfully.api.endpoints.BorrowController;
-
 import com.switchfully.api.endpoints.ItemController;
 import com.switchfully.api.endpoints.OrderController;
 import com.switchfully.api.endpoints.UserController;
 import com.switchfully.api.exceptions.CustomAccessDeniedHandler;
-import com.switchfully.domain.item.Item;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

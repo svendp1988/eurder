@@ -6,15 +6,19 @@ import com.switchfully.domain.user.User;
 import java.time.LocalDate;
 import java.util.Map;
 import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public class Order {
     private final String id = UUID.randomUUID().toString();
-    private final Map<Item, Integer> items;
+    private Map<Item, Integer> items;
     private LocalDate shippingDate;
-    private double totalAmount = calculateTotalAmount();
+    private double totalAmount;
 
-    public Order(Map<Item, Integer> items) {
-        this.items = items;
+    public Order(Map<Item, Integer> items, LocalDate shippingDate) {
+        this.items = new ConcurrentHashMap<>(items);
+        this.shippingDate = shippingDate;
+        totalAmount = calculateTotalAmount();
     }
 
     private double calculateTotalAmount() {
@@ -27,13 +31,8 @@ public class Order {
         return id;
     }
 
-
     public Map<Item, Integer> getItems() {
         return items;
-    }
-
-    public void setShippingDate(LocalDate shippingDate) {
-        this.shippingDate = shippingDate;
     }
 
     public LocalDate getShippingDate() {

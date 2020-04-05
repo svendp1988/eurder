@@ -30,7 +30,7 @@ public class ItemService {
         return itemRepository.viewAllItems();
     }
 
-    public ItemDto getItemByName(String name) {
-        return itemMapper.toItemDto(itemRepository.getItemByName(name));
+    public ItemDto getItemById(String id) {
+        return itemMapper.toItemDto(itemRepository.getItemById(id));
     }
 }

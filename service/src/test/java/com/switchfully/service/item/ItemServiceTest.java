@@ -55,8 +55,8 @@ class ItemServiceTest {
 
     @Test
     void getItemByName_returnsItemByLookingUpNameInDatabase() {
-        when(itemRepository.getItemByName("name")).thenReturn(item);
+        when(itemRepository.getItemById("id")).thenReturn(item);
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
-        assertEquals(itemDto, itemService.getItemByName("name"));
+        assertEquals(itemDto, itemService.getItemById("id"));
     }
 }

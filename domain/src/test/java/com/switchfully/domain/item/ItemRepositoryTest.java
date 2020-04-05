@@ -45,9 +45,26 @@ class ItemRepositoryTest {
     }
 
     @Test
-    void getItemByName_returnsItemByLookingUpNameInDatabase() {
+    void getItemById_returnsItemByLookingUpIdInDatabase() {
         Item item = testItemBuilder().build();
         itemRepository.addItem(item);
-        assertEquals(item, itemRepository.getItemByName(item.getName()));
+        assertEquals(item, itemRepository.getItemById(item.getId()));
+    }
+
+    @Test
+    void decrementingLastItemInDatabase_leadsToValue0() {
+        Item item = testItemBuilder().build();
+        itemRepository.addItem(item);
+        itemRepository.decrementItemAmount(item, 1);
+        assertThat(itemRepository.viewAllItems().containsValue(0));
+    }
+
+    @Test
+    void decrementingAmountInDatabase_canLeadToNegativeValue() {
+        Item item = testItemBuilder().build();
+        itemRepository.addItem(item);
+        itemRepository.decrementItemAmount(item, 4);
+        assertThat(itemRepository.viewAllItems().containsValue(-3));
+
     }
 }

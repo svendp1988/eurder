@@ -41,7 +41,7 @@ class ItemControllerTest {
 
     @Test
     void getItemByName_returnsCorrectItemFromService() {
-        when(itemService.getItemByName("name")).thenReturn(itemDto);
-        assertEquals(itemDto, itemController.getItemByName("name"));
+        when(itemService.getItemById("id")).thenReturn(itemDto);
+        assertEquals(itemDto, itemController.getItemById("id"));
     }
 }

@@ -26,10 +26,22 @@ public class ItemRepository {
                 .collect(Collectors.toMap(entry -> entry.getKey().getName(), Map.Entry::getValue));
     }
 
-    public Item getItemByName(String name) {
+    public Item getItemById(String id) {
         return itemDatabase.keySet().stream()
-                .filter(item -> item.getName().equals(name))
+                .filter(entry -> entry.getId().equals(id))
                 .findFirst()
                 .orElseThrow();
+    }
+
+    public int getAmountOfItems(String id) {
+        return itemDatabase.entrySet().stream()
+                .filter(entry -> entry.getKey().getId().equals(id))
+                .findFirst()
+                .orElseThrow()
+                .getValue();
+    }
+
+    public void decrementItemAmount(Item item, int amount) {
+        itemDatabase.put(item, itemDatabase.get(item) - amount);
     }
 }
