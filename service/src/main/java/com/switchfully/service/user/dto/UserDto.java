@@ -1,7 +1,6 @@
 package com.switchfully.service.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonView;
-import com.switchfully.domain.user.feature.UserRole;
 import com.switchfully.service.address.AddressDto;
 import com.switchfully.service.user.role.UserRoleDto;
 import com.switchfully.service.user.view.View;
@@ -16,7 +15,7 @@ public class UserDto {
     @JsonView(View.Public.class)
     private String lastName;
     @JsonView(View.Public.class)
-    private String email;;
+    private String email;
     @JsonView(View.Restricted.class)
     private UserRoleDto role;
     @JsonView(View.Restricted.class)
