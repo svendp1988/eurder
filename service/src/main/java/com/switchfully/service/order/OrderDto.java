@@ -4,6 +4,7 @@ import com.switchfully.service.item.dto.ItemDto;
 
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Objects;
 
 public class OrderDto {
     private String id;
@@ -25,7 +26,7 @@ public class OrderDto {
         return id;
     }
 
-    public Map<ItemDto, Integer> getOrders() {
+    public Map<ItemDto, Integer> getItems() {
         return orders;
     }
 
@@ -35,5 +36,20 @@ public class OrderDto {
 
     public double getTotalAmount() {
         return totalAmount;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        OrderDto orderDto = (OrderDto) o;
+        return Double.compare(orderDto.totalAmount, totalAmount) == 0 &&
+                Objects.equals(orders, orderDto.orders) &&
+                Objects.equals(shippingDate, orderDto.shippingDate);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(orders, shippingDate, totalAmount);
     }
 }

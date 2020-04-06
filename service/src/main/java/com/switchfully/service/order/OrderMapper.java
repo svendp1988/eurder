@@ -31,7 +31,6 @@ public class OrderMapper {
         Item item = getCorrectItemAndDecrementAmountInDatabase(itemId, amount);
         LocalDate shippingDate = setCorrectShippingDate(itemId);
         orders.put(item, amount);
-
         return new Order(orders, shippingDate);
     }
 

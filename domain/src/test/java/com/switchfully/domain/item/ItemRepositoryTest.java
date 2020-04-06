@@ -65,6 +65,14 @@ class ItemRepositoryTest {
         itemRepository.addItem(item);
         itemRepository.decrementItemAmount(item, 4);
         assertThat(itemRepository.viewAllItems().containsValue(-3));
+    }
 
+    @Test
+    void getAmountOfItems_returnsItemsLeftInStock() {
+        Item item = testItemBuilder().build();
+        String id = item.getId();
+        itemRepository.addItem(item);
+        itemRepository.addItem(item);
+        assertThat(itemRepository.getAmountOfItems(id)).isEqualTo(2);
     }
 }
