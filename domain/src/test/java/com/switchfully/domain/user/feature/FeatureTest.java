@@ -14,7 +14,7 @@ class FeatureTest {
     void getFeatureForCustomer_returnsListOfAllFeatures() {
         User user = testUserBuilder().buildCustomer();
         List<Feature> actualResult = Feature.getFeaturesForRoles(newArrayList(user.getRole().toString()));
-        List<Feature> expectedResult = List.of(Feature.GET_ITEM_BY_ID, Feature.ORDER_ITEM);
+        List<Feature> expectedResult = List.of(Feature.GET_ITEM_BY_ID, Feature.ORDER_ITEM, Feature.SEE_REPORT);
         assertEquals(expectedResult, actualResult);
     }
 

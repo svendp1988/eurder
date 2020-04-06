@@ -8,9 +8,10 @@ import java.util.stream.Collectors;
 import static com.google.common.collect.Lists.newArrayList;
 
 public enum Feature {
-    ADD_ITEM(UserRole.ADMIN),
     GET_ITEM_BY_ID(UserRole.CUSTOMER),
     ORDER_ITEM(UserRole.CUSTOMER),
+    SEE_REPORT(UserRole.CUSTOMER),
+    ADD_ITEM(UserRole.ADMIN),
     VIEW_CUSTOMERS(UserRole.ADMIN);
 
     private UserRole[] roles;
