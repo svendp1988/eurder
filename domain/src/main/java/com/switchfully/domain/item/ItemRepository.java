@@ -23,7 +23,7 @@ public class ItemRepository {
 
     public Map<String, Integer> viewAllItems() {
         return itemDatabase.entrySet().stream()
-                .collect(Collectors.toMap(entry -> entry.getKey().getName(), Map.Entry::getValue));
+                .collect(Collectors.toMap(entry -> String.format("id: %s, itemname: %s", entry.getKey().getId(), entry.getKey().getName()), Map.Entry::getValue));
     }
 
     public Item getItemById(String id) {

@@ -30,9 +30,9 @@ public class OrderController {
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "Placing an order", notes = "Customers can place orders.", response = OrderDto.class)
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto addOrder(Authentication authentication, @RequestBody String itemId, @RequestBody int amount) {
+    public OrderDto addOrder(Authentication authentication, @RequestBody OrderRequest orderRequest) {
         LOGGER.info("Adding an order");
-        return orderService.addOrder(authentication, itemId, amount);
+        return orderService.addOrder(authentication, orderRequest.itemId, orderRequest.amount);
     }
 
     @PreAuthorize("hasAuthority('SEE_REPORT')")

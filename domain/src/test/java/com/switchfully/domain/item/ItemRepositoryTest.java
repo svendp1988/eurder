@@ -30,7 +30,7 @@ class ItemRepositoryTest {
         Item secondItemToAdd = testItemBuilder().build();
         itemRepository.addItem(firstItemToAdd);
         itemRepository.addItem(secondItemToAdd);
-        assertThat(itemRepository.viewAllItems().get(firstItemToAdd.getName())).isEqualTo(2);
+        assertThat(itemRepository.viewAllItems().get(String.format("id: %s, itemname: %s", firstItemToAdd.getId(), firstItemToAdd.getName()))).isEqualTo(2);
     }
 
     @Test
