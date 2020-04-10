@@ -2,6 +2,7 @@ package com.switchfully.api.testbuilders;
 
 import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
+import com.switchfully.service.item.dto.UpdateItemDto;
 
 import static com.switchfully.service.item.dto.ItemDtoBuilder.itemDtoBuilder;
 
@@ -17,6 +18,8 @@ public class TestItemDtoBuilder {
     public static TestItemDtoBuilder testItemDtoBuilder() {
         return new TestItemDtoBuilder();
     }
+
+    public UpdateItemDto buildTestUpdateItemDto() { return new UpdateItemDto(id, name, description, price); }
 
     public CreateItemDto buildTestCreateItemDto() {
         return new CreateItemDto(name, description, price);

@@ -3,6 +3,7 @@ package com.switchfully.api.endpoints;
 import com.switchfully.service.item.ItemService;
 import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
+import com.switchfully.service.item.dto.UpdateItemDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -18,6 +19,11 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class ItemControllerTest {
     ItemDto itemDto = testItemDtoBuilder().buildTestItemDto();
+    UpdateItemDto updateItemDto = testItemDtoBuilder()
+            .withName("updatedName")
+            .withDescription("updatedDescription")
+            .withPrice(5)
+            .buildTestUpdateItemDto();
     CreateItemDto createItemDto = testItemDtoBuilder().buildTestCreateItemDto();
     Map<String, Integer> items = Map.of("name", 1);
 
@@ -43,5 +49,16 @@ class ItemControllerTest {
     void getItemByName_returnsCorrectItemFromService() {
         when(itemService.getItemById("id")).thenReturn(itemDto);
         assertEquals(itemDto, itemController.getItemById("id"));
+    }
+
+    @Test
+    void updateItem_returnsDtoWithUpdatedValues() {
+        ItemDto itemDto = new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice());
+        when(itemService.updateItem(updateItemDto)).thenReturn(itemDto);
+        ItemDto actualItemDto = itemController.updateItem(updateItemDto);
+        assertEquals(actualItemDto.getId(), updateItemDto.getId());
+        assertEquals(actualItemDto.getName(), updateItemDto.getName());
+        assertEquals(actualItemDto.getDescription(), updateItemDto.getDescription());
+        assertEquals(actualItemDto.getPrice(), updateItemDto.getPrice());
     }
 }

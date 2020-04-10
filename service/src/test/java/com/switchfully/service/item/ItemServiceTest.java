@@ -4,6 +4,7 @@ import com.switchfully.domain.item.Item;
 import com.switchfully.domain.item.ItemRepository;
 import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
+import com.switchfully.service.item.dto.UpdateItemDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -58,5 +59,22 @@ class ItemServiceTest {
         when(itemRepository.getItemById("id")).thenReturn(item);
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
         assertEquals(itemDto, itemService.getItemById("id"));
+    }
+
+    @Test
+    void updateItem_returnsDtoWithUpdatedValues() {
+        Item item = itemBuilder()
+                .withName("name")
+                .withDescription("description")
+                .withPrice(1)
+                .build();
+        UpdateItemDto updateItemDto = new UpdateItemDto(item.getId(), "updatedName", "updatedDescription", 2);
+        when(itemRepository.getItemById(item.getId())).thenReturn(item);
+        when(itemMapper.toItemDto(item)).thenReturn(new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice()));
+        ItemDto itemDto = itemService.updateItem(updateItemDto);
+        assertEquals(item.getId(), itemDto.getId());
+        assertEquals("updatedName", itemDto.getName());
+        assertEquals("updatedDescription", itemDto.getDescription());
+        assertEquals(2, itemDto.getPrice());
     }
 }

@@ -58,12 +58,12 @@ Which choices did you make? (List your choices below, remove what is not relevan
  - [x] I did a "codereview" of my own code before declaring it "done".
 ### Comments:
 ## Story 3
- - [ ] The functional requirements are implemented
- - [ ] The requirements are tested with Postman
- - [ ] The requirements are unit tested
- - [ ] The requirements are integration tested
- - [ ] Proper logging is setup
- - [ ] I did a "codereview" of my own code before declaring it "done".
+ - [x] The functional requirements are implemented
+ - [x] The requirements are tested with Postman
+ - [x] The requirements are unit tested
+ - [x] The requirements are integration tested
+ - [x] Proper logging is setup
+ - [x] I did a "codereview" of my own code before declaring it "done".
 ### Comments: 
 ## Story 7
 - [x] The functional requirements are implemented
@@ -83,7 +83,7 @@ Which choices did you make? (List your choices below, remove what is not relevan
 ### Comments: 
 ## Nice-To-Have stories
  - [ ] Story 4
- - [ ] Story 5
+ - [x] Story 5
  - [ ] Story 6
  - [ ] Story 9
  - [ ] Story 10

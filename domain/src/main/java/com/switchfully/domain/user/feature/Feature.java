@@ -12,6 +12,7 @@ public enum Feature {
     ORDER_ITEM(UserRole.CUSTOMER),
     SEE_REPORT(UserRole.CUSTOMER),
     ADD_ITEM(UserRole.ADMIN),
+    UPDATE_ITEM(UserRole.ADMIN),
     VIEW_CUSTOMERS(UserRole.ADMIN);
 
     private UserRole[] roles;

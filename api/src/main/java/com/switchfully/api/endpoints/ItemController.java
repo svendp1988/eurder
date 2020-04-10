@@ -3,6 +3,7 @@ package com.switchfully.api.endpoints;
 import com.switchfully.service.item.ItemService;
 import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
+import com.switchfully.service.item.dto.UpdateItemDto;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,5 +51,14 @@ public class ItemController {
     public ItemDto getItemById(@RequestParam String id) {
         LOGGER.info("Returning item by id.");
         return itemService.getItemById(id);
+    }
+
+    @PreAuthorize("hasAuthority('UPDATE_ITEM')")
+    @PutMapping(consumes = "application/json", produces = "application/json")
+    @ApiOperation(value = "Updating item", notes = "Admins can update items.", response = ItemDto.class)
+    @ResponseStatus(HttpStatus.OK)
+    public ItemDto updateItem(@RequestBody UpdateItemDto updateItemDto) {
+        LOGGER.info("Updating an item.");
+        return itemService.updateItem(updateItemDto);
     }
 }
