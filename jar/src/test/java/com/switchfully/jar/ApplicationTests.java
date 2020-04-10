@@ -1,25 +1,23 @@
 package com.switchfully.jar;
 
-import com.switchfully.api.endpoints.OrderRequest;
+import com.switchfully.domain.item.Item;
+import com.switchfully.domain.item.ItemRepository;
 import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
 import com.switchfully.service.order.OrderDto;
+import com.switchfully.service.order.OrderRequestDto;
 import com.switchfully.service.user.dto.CreateUserDto;
 import com.switchfully.service.user.dto.UserDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
+import org.springframework.test.web.reactive.server.EntityExchangeResult;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Mono;
 
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
-
 import static com.google.common.collect.Lists.newArrayList;
+import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 import static com.switchfully.service.address.AddressDtoBuilder.addressDtoBuilder;
 import static com.switchfully.service.user.dto.UserDtoBuilder.userDtoBuilder;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
@@ -141,14 +139,19 @@ class ApplicationTests {
 //    @Nested
 //    @DisplayName("OrderControllerIntegrationTest")
 //    class OrderControllerIntegrationTest {
-//        OrderDto orderDto = new OrderDto("orderId", Map.of(new ItemDto("id", "name", "description", 2.5), 2), LocalDate.now(), 5);
-//        List<OrderDto> orders = List.of(orderDto);
-//        Authentication authentication = new UsernamePasswordAuthenticationToken("sven@order.com", "awesome");
+//        ItemRepository itemRepository = new ItemRepository();
+//        Item item = itemBuilder()
+//                .withName("name")
+//                .withDescription("description")
+//                .withPrice(2.5)
+//                .build();
+//        String id = item.getId();
 //
 //        @Test
 //        @DisplayName("Add order as customer.")
 //        void customerCanOrderItems() {
-//            OrderRequest request = new OrderRequest("id", 2);
+//            itemRepository.addItem(item);
+//            OrderRequestDto request = new OrderRequestDto(id, 1);
 //            WebTestClient
 //                    .bindToServer()
 //                    .baseUrl("http://localhost:8080")
@@ -158,7 +161,7 @@ class ApplicationTests {
 //                    .build()
 //                    .post()
 //                    .uri("/orders")
-//                    .body(Mono.just(request), OrderRequest.class)
+//                    .body(Mono.just(request), OrderRequestDto.class)
 //                    .exchange()
 //                    .expectStatus().isCreated()
 //                    .expectHeader().valueEquals("Content-Type", "application/json")

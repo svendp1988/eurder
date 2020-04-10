@@ -25,9 +25,9 @@ public class OrderService {
         this.userMapper = userMapper;
     }
 
-    public OrderDto addOrder(Authentication authentication, String itemId, int amount) {
+    public OrderDto addOrder(Authentication authentication, OrderRequestDto orderRequestDto) {
         String userId = getUserId(authentication);
-        return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(itemId, amount)));
+        return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(orderRequestDto)));
     }
 
     public String getUserId(Authentication authentication) {

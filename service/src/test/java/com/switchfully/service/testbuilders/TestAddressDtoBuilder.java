@@ -1,7 +1,5 @@
 package com.switchfully.service.testbuilders;
 
-import com.switchfully.domain.user.Address;
-import com.switchfully.domain.user.builders.AddressBuilder;
 import com.switchfully.service.address.AddressDto;
 
 import static com.switchfully.service.address.AddressDtoBuilder.addressDtoBuilder;

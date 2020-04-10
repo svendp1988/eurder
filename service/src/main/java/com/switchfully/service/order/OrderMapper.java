@@ -26,12 +26,12 @@ public class OrderMapper {
         this.itemRepository = itemRepository;
     }
 
-    public Order toNewOrder(String itemId, int amount) {
-        Map<Item, Integer> orders = new ConcurrentHashMap<>();
+    public Order toNewOrder(OrderRequestDto orderRequestDto) {
+        String itemId = orderRequestDto.getItemId();
+        int amount = orderRequestDto.getAmount();
         Item item = getCorrectItemAndDecrementAmountInDatabase(itemId, amount);
         LocalDate shippingDate = setCorrectShippingDate(itemId);
-        orders.put(item, amount);
-        return new Order(orders, shippingDate);
+        return new Order(item, amount, shippingDate);
     }
 
     private Item getCorrectItemAndDecrementAmountInDatabase(String itemId, int amount) {
@@ -51,8 +51,8 @@ public class OrderMapper {
     public OrderDto toDto(Order order) {
         return new OrderDto(
                 order.getOrderId(),
-                order.getItems().entrySet().stream()
-                        .collect(Collectors.toConcurrentMap(entry -> itemMapper.toItemDto(entry.getKey()), Map.Entry::getValue)),
+                itemMapper.toItemDto(order.getItem()),
+                order.getAmount(),
                 order.getShippingDate(),
                 order.getTotalAmount());
     }

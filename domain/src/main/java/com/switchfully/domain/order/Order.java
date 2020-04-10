@@ -11,28 +11,32 @@ import java.util.stream.Collectors;
 
 public class Order {
     private final String id = UUID.randomUUID().toString();
-    private Map<Item, Integer> items;
+    private Item item;
+    private int amount;
     private LocalDate shippingDate;
     private double totalAmount;
 
-    public Order(Map<Item, Integer> items, LocalDate shippingDate) {
-        this.items = new ConcurrentHashMap<>(items);
+    public Order(Item item, int amount, LocalDate shippingDate) {
+        this.item = item;
+        this.amount = amount;
         this.shippingDate = shippingDate;
         totalAmount = calculateTotalAmount();
     }
 
     private double calculateTotalAmount() {
-        return items.entrySet().stream()
-                .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
-                .sum();
+        return item.getPrice() * amount;
     }
 
     public String getOrderId() {
         return id;
     }
 
-    public Map<Item, Integer> getItems() {
-        return items;
+    public Item getItem() {
+        return item;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     public LocalDate getShippingDate() {

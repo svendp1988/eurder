@@ -2,6 +2,7 @@ package com.switchfully.api.endpoints;
 
 import com.switchfully.service.item.dto.ItemDto;
 import com.switchfully.service.order.OrderDto;
+import com.switchfully.service.order.OrderRequestDto;
 import com.switchfully.service.order.OrderService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,9 +23,10 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class OrderControllerTest {
-    OrderDto order = new OrderDto("orderId", Map.of(new ItemDto("id", "name", "description", 2.5), 2), LocalDate.now(), 5);
+    OrderDto order = new OrderDto("orderId", new ItemDto("id", "name", "description", 2.5), 2, LocalDate.now(), 5);
     List<OrderDto> orders = List.of(order);
     Authentication authentication = new UsernamePasswordAuthenticationToken("sven@order.com", "awesome");
+    OrderRequestDto orderRequestDto = new OrderRequestDto("id", 2);
 
     OrderService orderService = mock(OrderService.class);
 
@@ -33,9 +35,9 @@ class OrderControllerTest {
 
     @Test
     void addOrder_returnsOrderDto() {
-//        when(orderService.addOrder(authentication, "id", 2)).thenReturn(order);
-//        OrderDto actualOrderDto = orderController.addOrder(authentication, "id", 2);
-//        assertEquals(order, actualOrderDto);
+        when(orderService.addOrder(authentication, orderRequestDto)).thenReturn(order);
+        OrderDto actualOrderDto = orderController.addOrder(authentication, orderRequestDto);
+        assertEquals(order, actualOrderDto);
     }
 
     @Test

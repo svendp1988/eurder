@@ -2,16 +2,13 @@ package com.switchfully.service.user;
 
 import com.switchfully.domain.user.User;
 import com.switchfully.domain.user.UserRepository;
-import com.switchfully.service.address.AddressMapper;
 import com.switchfully.service.user.dto.CreateUserDto;
 import com.switchfully.service.user.dto.UserDto;
-import com.switchfully.service.user.role.UserRoleMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.Collection;
 import java.util.List;
@@ -21,9 +18,6 @@ import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
 import static com.switchfully.service.testbuilders.TestUserDtoBuilder.testUserDtoBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)

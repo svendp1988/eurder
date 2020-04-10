@@ -1,6 +1,7 @@
 package com.switchfully.api.endpoints;
 
 import com.switchfully.service.order.OrderDto;
+import com.switchfully.service.order.OrderRequestDto;
 import com.switchfully.service.order.OrderService;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
@@ -30,9 +31,9 @@ public class OrderController {
     @PostMapping(consumes = "application/json", produces = "application/json")
     @ApiOperation(value = "Placing an order", notes = "Customers can place orders.", response = OrderDto.class)
     @ResponseStatus(HttpStatus.CREATED)
-    public OrderDto addOrder(Authentication authentication, @RequestBody OrderRequest orderRequest) {
+    public OrderDto addOrder(Authentication authentication, @RequestBody OrderRequestDto orderRequest) {
         LOGGER.info("Adding an order");
-        return orderService.addOrder(authentication, orderRequest.itemId, orderRequest.amount);
+        return orderService.addOrder(authentication, orderRequest);
     }
 
     @PreAuthorize("hasAuthority('SEE_REPORT')")

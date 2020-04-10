@@ -19,11 +19,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 
 import java.time.LocalDate;
-import java.util.*;
 
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -38,12 +36,8 @@ class OrderServiceIntegrationTest {
             .withPrice(2.5)
             .build();
     ItemDto itemDto = new ItemDto("id", "name", "description", 2.5);
-    Order order = new Order(Map.of(itemBuilder()
-            .withName("name")
-            .withDescription("description")
-            .withPrice(2.5)
-            .build(), 2), LocalDate.now());
-    List<Order> orders = List.of(order);
+    Order order = new Order(item, 2, LocalDate.now());
+    OrderRequestDto orderRequestDto = new OrderRequestDto("id", 1);
 
     @Mock
     ItemRepository itemRepository;
@@ -58,9 +52,9 @@ class OrderServiceIntegrationTest {
     void whenAddingOrder_returnsANewOrderDto() {
         when(itemRepository.getItemById("id")).thenReturn(item);
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
-        OrderDto orderDto = orderService.addOrder(authentication, "id", 1);
+        OrderDto orderDto = orderService.addOrder(authentication, orderRequestDto);
         assertThat(orderDto.getTotalAmount()).isEqualTo(2.5);
-        assertThat(orderDto.getItems().containsKey(itemDto));
+        assertThat(orderDto.getItemDto()).isEqualTo(itemDto);
         assertThat(orderDto.getShippingDate()).isEqualTo(LocalDate.now().plusDays(7));
     }
 

@@ -9,12 +9,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.internal.matchers.Or;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
 
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -29,12 +26,8 @@ class OrderMapperIntegrationTest {
             .withPrice(2.5)
             .build();
     ItemDto itemDto = new ItemDto("id", "name", "description", 2.5);
-    Map<Item, Integer> items = Map.of(itemBuilder()
-            .withName("name")
-            .withDescription("description")
-            .withPrice(2.5)
-            .build(), 2);
-    Order order = new Order(items, LocalDate.now());
+    Order order = new Order(item, 2, LocalDate.now());
+    OrderRequestDto orderRequestDto = new OrderRequestDto("id", 2);
 
     @Mock
     ItemMapper itemMapper;
@@ -47,8 +40,8 @@ class OrderMapperIntegrationTest {
     @Test
     void toNewOrder_returnsOrder() {
         when(itemRepository.getItemById("id")).thenReturn(item);
-        Order order = orderMapper.toNewOrder("id", 2);
-        assertThat(order.getItems()).isEqualTo(items);
+        Order order = orderMapper.toNewOrder(orderRequestDto);
+        assertThat(order.getItem()).isEqualTo(item);
         assertThat(order.getTotalAmount()).isEqualTo(5);
         assertThat(order.getShippingDate()).isEqualTo(LocalDate.now().plusDays(7));
     }

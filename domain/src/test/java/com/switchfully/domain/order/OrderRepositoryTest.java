@@ -17,8 +17,7 @@ class OrderRepositoryTest {
             .withDescription("description")
             .withPrice(2.5)
             .build();
-    Map<Item, Integer> items = Map.of(item, 2);
-    Order order = new Order(items, LocalDate.now());
+    Order order = new Order(item, 2, LocalDate.now());
     OrderRepository orderRepository = new OrderRepository();
 
     @Test
