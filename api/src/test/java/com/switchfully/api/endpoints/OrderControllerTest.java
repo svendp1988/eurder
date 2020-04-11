@@ -46,4 +46,11 @@ class OrderControllerTest {
         List<OrderDto> actualResult = orderController.getReportOfOrders(authentication);
         assertEquals(orders, actualResult);
     }
+
+    @Test
+    void reOrderingPreviousOrder_returnsOrderDto() {
+        when(orderService.reOrder(authentication, "orderId")).thenReturn(order);
+        OrderDto actualOrderDto = orderController.reOrder(authentication, "orderId");
+        assertEquals(order, actualOrderDto);
+    }
 }

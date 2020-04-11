@@ -44,4 +44,13 @@ public class OrderController {
         LOGGER.info("Retrieving report of orders.");
         return orderService.getReportOfOrders(authentication);
     }
+
+    @PreAuthorize("hasAuthority('ORDER_ITEM')")
+    @PostMapping(path = "/{orderId}", produces = "application/json")
+    @ApiOperation(value = "Reordering previous order.", notes = "Customers can reorder a previous order.", response = OrderDto.class)
+    @ResponseStatus(HttpStatus.CREATED)
+    public OrderDto reOrder(Authentication authentication, @PathVariable String orderId) {
+        LOGGER.info("Reordering previous order.");
+        return orderService.reOrder(authentication, orderId);
+    }
 }

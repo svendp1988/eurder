@@ -33,9 +33,9 @@ public class ItemRepository {
                 .orElseThrow();
     }
 
-    public int getAmountOfItems(String id) {
+    public int getAmountOfItems(Item item) {
         return itemDatabase.entrySet().stream()
-                .filter(entry -> entry.getKey().getId().equals(id))
+                .filter(entry -> entry.getKey().equals(item))
                 .findFirst()
                 .orElseThrow()
                 .getValue();

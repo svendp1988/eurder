@@ -19,9 +19,11 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -40,13 +42,27 @@ class OrderServiceIntegrationTest {
     OrderRequestDto orderRequestDto = new OrderRequestDto("id", 1);
 
     @Mock
-    ItemRepository itemRepository;
-    @Mock
     ItemMapper itemMapper;
     @InjectMocks
-    OrderMapper orderMapper = new OrderMapper(itemMapper, itemRepository);
+    OrderMapper orderMapper = new OrderMapper(itemMapper);
 
-    OrderService orderService = new OrderService(orderRepository, orderMapper, userRepository, userMapper);
+    @Mock
+    ItemRepository itemRepository;
+    @InjectMocks
+    OrderService orderService = new OrderService(orderRepository, orderMapper, userRepository, userMapper, itemRepository);
+
+
+    @Test
+    void whenItemInStock_dateIsSetToNextDay() {
+        when(itemRepository.getAmountOfItems(item)).thenReturn(3);
+        assertThat(orderService.setCorrectShippingDateAndDecrementAmountInDatabase(item, 1)).isEqualTo(LocalDate.now().plusDays(1));
+    }
+
+    @Test
+    void whenItemNotInStock_dateIsSetTo7DaysFromNow() {
+        when(itemRepository.getAmountOfItems(item)).thenReturn(0);
+        assertThat(orderService.setCorrectShippingDateAndDecrementAmountInDatabase(item, 2)).isEqualTo(LocalDate.now().plusDays(7));
+    }
 
     @Test
     void whenAddingOrder_returnsANewOrderDto() {
@@ -64,6 +80,21 @@ class OrderServiceIntegrationTest {
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
         orderRepository.addOrder(userId, order);
         assertThat(orderService.getReportOfOrders(authentication)).containsExactly(orderMapper.toDto(order));
+    }
 
+    @Test
+    void reOrderingItem_returnsDtoWithSameItemsAndAmountAsPreviousOrder() {
+        String userId = orderService.getUserId(authentication);
+        orderRepository.addOrder(userId, order);
+        List<Order> orders = orderRepository.getReportOfOrders(userId);
+        String foundorder = orders.stream()
+                .filter(order1 -> order1.getOrderId().equals(order.getOrderId()))
+                .findFirst()
+                .orElseThrow()
+                .getOrderId();
+        OrderDto actualDto = orderService.reOrder(authentication, foundorder);
+        OrderDto expectedDto = orderMapper.toDto(order);
+        assertEquals(expectedDto.getItemDto(), actualDto.getItemDto());
+        assertEquals(expectedDto.getAmount(), actualDto.getAmount());
     }
 }

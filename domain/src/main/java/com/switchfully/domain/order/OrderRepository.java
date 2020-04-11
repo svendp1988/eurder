@@ -25,7 +25,7 @@ public class OrderRepository {
         return order;
     }
 
-    public List<Order> getReportOfOrders(String id) {
-        return ordersPerUser.get(id);
+    public List<Order> getReportOfOrders(String userId) {
+        return ordersPerUser.get(userId);
     }
 }

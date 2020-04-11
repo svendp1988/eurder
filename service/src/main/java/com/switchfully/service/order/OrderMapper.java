@@ -18,35 +18,15 @@ import java.util.stream.Collectors;
 @Component
 public class OrderMapper {
     private ItemMapper itemMapper;
-    private ItemRepository itemRepository;
 
     @Autowired
-    public OrderMapper(ItemMapper itemMapper, ItemRepository itemRepository) {
+    public OrderMapper(ItemMapper itemMapper) {
         this.itemMapper = itemMapper;
-        this.itemRepository = itemRepository;
     }
 
-    public Order toNewOrder(OrderRequestDto orderRequestDto) {
-        String itemId = orderRequestDto.getItemId();
-        int amount = orderRequestDto.getAmount();
-        Item item = getCorrectItemAndDecrementAmountInDatabase(itemId, amount);
-        LocalDate shippingDate = setCorrectShippingDate(itemId);
+    public Order toNewOrder(Item item, int amount, LocalDate shippingDate) {
         return new Order(item, amount, shippingDate);
     }
-
-    private Item getCorrectItemAndDecrementAmountInDatabase(String itemId, int amount) {
-        Item item = itemRepository.getItemById(itemId);
-        itemRepository.decrementItemAmount(item, amount);
-        return item;
-    }
-
-    private LocalDate setCorrectShippingDate(String itemId) {
-        if (itemRepository.getAmountOfItems(itemId) <= 0) {
-            return LocalDate.now().plusDays(7);
-        }
-        return LocalDate.now().plusDays(1);
-    }
-
 
     public OrderDto toDto(Order order) {
         return new OrderDto(

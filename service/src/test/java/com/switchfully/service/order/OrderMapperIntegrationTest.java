@@ -31,16 +31,13 @@ class OrderMapperIntegrationTest {
 
     @Mock
     ItemMapper itemMapper;
-    @Mock
-    ItemRepository itemRepository;
 
     @InjectMocks
-    OrderMapper orderMapper = new OrderMapper(itemMapper, itemRepository);
+    OrderMapper orderMapper = new OrderMapper(itemMapper);
 
     @Test
     void toNewOrder_returnsOrder() {
-        when(itemRepository.getItemById("id")).thenReturn(item);
-        Order order = orderMapper.toNewOrder(orderRequestDto);
+        Order order = orderMapper.toNewOrder(item, 2, LocalDate.now().plusDays(7));
         assertThat(order.getItem()).isEqualTo(item);
         assertThat(order.getTotalAmount()).isEqualTo(5);
         assertThat(order.getShippingDate()).isEqualTo(LocalDate.now().plusDays(7));

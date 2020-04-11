@@ -70,9 +70,8 @@ class ItemRepositoryTest {
     @Test
     void getAmountOfItems_returnsItemsLeftInStock() {
         Item item = testItemBuilder().build();
-        String id = item.getId();
         itemRepository.addItem(item);
         itemRepository.addItem(item);
-        assertThat(itemRepository.getAmountOfItems(id)).isEqualTo(2);
+        assertThat(itemRepository.getAmountOfItems(item)).isEqualTo(2);
     }
 }
