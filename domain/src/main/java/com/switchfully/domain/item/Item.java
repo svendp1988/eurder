@@ -13,6 +13,13 @@ public class Item {
     private double price;
     private LocalDate shippingDate;
 
+    public Item(Item item) {
+        id = item.getId();
+        name = item.getName();
+        description = item.getDescription();
+        price = item.getPrice();
+    }
+
     public Item(ItemBuilder itemBuilder) {
         name = itemBuilder.getName();
         description = itemBuilder.getDescription();

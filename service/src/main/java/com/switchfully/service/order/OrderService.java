@@ -16,6 +16,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
+
 @Service
 public class OrderService {
     private OrderRepository orderRepository;
@@ -36,12 +38,13 @@ public class OrderService {
     public OrderDto addOrder(Authentication authentication, OrderRequestDto orderRequestDto) {
         String userId = getUserId(authentication);
         Map<Item, Integer> orders = new HashMap<>();
-        for (Map.Entry<String, Integer> entry : orderRequestDto.getOrder().entrySet()) {
-            Item item = itemRepository.getItemById(entry.getKey());
-            int amount = entry.getValue();
-            setCorrectShippingDateAndDecrementAmountInDatabase(item, amount);
-            orders.put(item, amount);
-        }
+        orderRequestDto.getOrder().forEach((key, value) -> {
+            Item item = itemRepository.getItemById(key);
+            Item soldItem = new Item(item);
+            int amount = value;
+            setCorrectShippingDateAndDecrementAmountInDatabase(item, soldItem, amount);
+            orders.put(soldItem, amount);
+        });
         return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(orders)));
     }
 
@@ -54,18 +57,22 @@ public class OrderService {
 
     public OrderDto reOrder(Authentication authentication, String orderId) {
         String userId = getUserId(authentication);
-        Order foundOrder = orderRepository.getReportOfOrders(userId).stream()
+        Order foundOrder = getCorrectOrder(orderId, userId);
+        Map<Item, Integer> orders = new HashMap<>();
+        foundOrder.getOrders().forEach((item, value) -> {
+            Item soldItem = new Item(item);
+            int amount = value;
+            setCorrectShippingDateAndDecrementAmountInDatabase(item, soldItem, amount);
+            orders.put(soldItem, amount);
+        });
+        return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(orders)));
+    }
+
+    private Order getCorrectOrder(String orderId, String userId) {
+        return orderRepository.getReportOfOrders(userId).stream()
                 .filter(order -> order.getOrderId().equals(orderId))
                 .findFirst()
                 .orElseThrow();
-        Map<Item, Integer> orders = new HashMap<>();
-        for (Map.Entry<Item, Integer> entry : foundOrder.getOrders().entrySet()) {
-            Item item = entry.getKey();
-            int amount = entry.getValue();
-            setCorrectShippingDateAndDecrementAmountInDatabase(item, amount);
-            orders.put(item, amount);
-        }
-        return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(orders)));
     }
 
     String getUserId(Authentication authentication) {
@@ -75,12 +82,12 @@ public class OrderService {
                 .orElseThrow()).getId();
     }
 
-    void setCorrectShippingDateAndDecrementAmountInDatabase(Item item, int amount) {
+    void setCorrectShippingDateAndDecrementAmountInDatabase(Item item, Item soldItem, int amount) {
         LocalDate shippingDate = LocalDate.now().plusDays(1);
         if (itemRepository.getAmountOfItems(item) - amount < 0) {
             shippingDate = LocalDate.now().plusDays(7);
         }
         itemRepository.decrementItemAmount(item, amount);
-        item.setShippingDate(shippingDate);
+        soldItem.setShippingDate(shippingDate);
     }
 }
