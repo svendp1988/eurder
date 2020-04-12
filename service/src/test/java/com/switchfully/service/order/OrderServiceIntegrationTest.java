@@ -20,6 +20,7 @@ import org.springframework.security.core.Authentication;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -37,9 +38,9 @@ class OrderServiceIntegrationTest {
             .withDescription("description")
             .withPrice(2.5)
             .build();
-    ItemDto itemDto = new ItemDto("id", "name", "description", 2.5);
-    Order order = new Order(item, 2, LocalDate.now());
-    OrderRequestDto orderRequestDto = new OrderRequestDto("id", 1);
+    ItemDto itemDto = new ItemDto("id", "name", "description", 2.5, null);
+    Order order = new Order(Map.of(item, 2));
+    OrderRequestDto orderRequestDto = new OrderRequestDto(Map.of("id", 2));
 
     @Mock
     ItemMapper itemMapper;
@@ -54,14 +55,18 @@ class OrderServiceIntegrationTest {
 
     @Test
     void whenItemInStock_dateIsSetToNextDay() {
+        when(itemRepository.getItemById("id")).thenReturn(item);
         when(itemRepository.getAmountOfItems(item)).thenReturn(3);
-        assertThat(orderService.setCorrectShippingDateAndDecrementAmountInDatabase(item, 1)).isEqualTo(LocalDate.now().plusDays(1));
+        orderService.addOrder(authentication, orderRequestDto);
+        assertThat(item.getShippingDate()).isEqualTo(LocalDate.now().plusDays(1));
     }
 
     @Test
     void whenItemNotInStock_dateIsSetTo7DaysFromNow() {
+        when(itemRepository.getItemById("id")).thenReturn(item);
         when(itemRepository.getAmountOfItems(item)).thenReturn(0);
-        assertThat(orderService.setCorrectShippingDateAndDecrementAmountInDatabase(item, 2)).isEqualTo(LocalDate.now().plusDays(7));
+        orderService.addOrder(authentication, orderRequestDto);
+        assertThat(item.getShippingDate()).isEqualTo(LocalDate.now().plusDays(7));
     }
 
     @Test
@@ -69,9 +74,8 @@ class OrderServiceIntegrationTest {
         when(itemRepository.getItemById("id")).thenReturn(item);
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
         OrderDto orderDto = orderService.addOrder(authentication, orderRequestDto);
-        assertThat(orderDto.getTotalAmount()).isEqualTo(2.5);
-        assertThat(orderDto.getItemDto()).isEqualTo(itemDto);
-        assertThat(orderDto.getShippingDate()).isEqualTo(LocalDate.now().plusDays(7));
+        assertThat(orderDto.getTotalAmount()).isEqualTo(5);
+        assertThat(orderDto.getOrders().keySet()).contains(itemDto);
     }
 
     @Test
@@ -94,7 +98,7 @@ class OrderServiceIntegrationTest {
                 .getOrderId();
         OrderDto actualDto = orderService.reOrder(authentication, foundorder);
         OrderDto expectedDto = orderMapper.toDto(order);
-        assertEquals(expectedDto.getItemDto(), actualDto.getItemDto());
-        assertEquals(expectedDto.getAmount(), actualDto.getAmount());
+        assertEquals(expectedDto.getOrders().keySet(), actualDto.getOrders().keySet());
+        assertEquals(expectedDto.getOrders().get(itemDto), actualDto.getOrders().get(itemDto));
     }
 }

@@ -1,22 +1,18 @@
 package com.switchfully.service.order;
 
+import java.util.Map;
+
 public class OrderRequestDto {
-    private String itemId;
-    private Integer amount;
+    private Map<String, Integer> order;
 
     public OrderRequestDto() {
     }
 
-    public OrderRequestDto(String itemId, Integer amount) {
-        this.itemId = itemId;
-        this.amount = amount;
+    public OrderRequestDto(Map<String, Integer> order) {
+        this.order = order;
     }
 
-    public String getItemId() {
-        return itemId;
-    }
-
-    public Integer getAmount() {
-        return amount;
+    public Map<String, Integer> getOrder() {
+        return order;
     }
 }

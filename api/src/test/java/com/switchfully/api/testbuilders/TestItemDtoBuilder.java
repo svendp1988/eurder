@@ -4,8 +4,6 @@ import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
 import com.switchfully.service.item.dto.UpdateItemDto;
 
-import static com.switchfully.service.item.dto.ItemDtoBuilder.itemDtoBuilder;
-
 public class TestItemDtoBuilder {
     private String id = "id";
     private String name = "name";
@@ -26,7 +24,7 @@ public class TestItemDtoBuilder {
     }
 
     public ItemDto buildTestItemDto() {
-        return new ItemDto(id, name, description, price);
+        return new ItemDto(id, name, description, price, null);
     }
 
     public TestItemDtoBuilder withId(String id) {

@@ -1,45 +1,33 @@
 package com.switchfully.service.order;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.switchfully.service.item.dto.ItemDto;
+import com.switchfully.service.item.dto.ItemDtoSerializer;
 
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.ConcurrentHashMap;
 
 public class OrderDto {
-    private String id;
-    private ItemDto itemDto;
-    private int amount;
-    private LocalDate shippingDate;
+    private String orderId;
+    @JsonSerialize(keyUsing = ItemDtoSerializer.class)
+    private Map<ItemDto, Integer> orders;
     private double totalAmount;
 
     public OrderDto() {
     }
 
-    public OrderDto(String id, ItemDto itemDto, int amount, LocalDate shippingDate, double totalAmount) {
-        this.id = id;
-        this.itemDto = itemDto;
-        this.amount = amount;
-        this.shippingDate = shippingDate;
+    public OrderDto(String id, Map<ItemDto, Integer> orders, double totalAmount) {
+        this.orderId = id;
+        this.orders = orders;
         this.totalAmount = totalAmount;
     }
 
     public String getId() {
-        return id;
+        return orderId;
     }
 
-    public ItemDto getItemDto() {
-        return itemDto;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public LocalDate getShippingDate() {
-        return shippingDate;
+    public Map<ItemDto, Integer> getOrders() {
+        return orders;
     }
 
     public double getTotalAmount() {
@@ -49,16 +37,14 @@ public class OrderDto {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof OrderDto)) return false;
         OrderDto orderDto = (OrderDto) o;
-        return amount == orderDto.amount &&
-                Double.compare(orderDto.totalAmount, totalAmount) == 0 &&
-                Objects.equals(itemDto, orderDto.itemDto) &&
-                Objects.equals(shippingDate, orderDto.shippingDate);
+        return Double.compare(orderDto.getTotalAmount(), getTotalAmount()) == 0 &&
+                Objects.equals(getOrders(), orderDto.getOrders());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(itemDto, amount, shippingDate, totalAmount);
+        return Objects.hash(getOrders(), getTotalAmount());
     }
 }

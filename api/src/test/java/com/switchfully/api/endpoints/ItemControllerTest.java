@@ -53,7 +53,7 @@ class ItemControllerTest {
 
     @Test
     void updateItem_returnsDtoWithUpdatedValues() {
-        ItemDto itemDto = new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice());
+        ItemDto itemDto = new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice(), null);
         when(itemService.updateItem(updateItemDto)).thenReturn(itemDto);
         ItemDto actualItemDto = itemController.updateItem(updateItemDto);
         assertEquals(actualItemDto.getId(), updateItemDto.getId());

@@ -1,13 +1,8 @@
 package com.switchfully.service.item.dto;
 
-import com.fasterxml.jackson.annotation.JsonView;
-import com.switchfully.domain.item.Item;
-import com.switchfully.domain.user.Address;
-import com.switchfully.domain.user.User;
-import com.switchfully.domain.user.feature.UserRole;
-import com.switchfully.service.user.dto.UserDto;
-import com.switchfully.service.user.view.View;
+import com.fasterxml.jackson.annotation.JsonValue;
 
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class ItemDto {
@@ -15,15 +10,17 @@ public class ItemDto {
     private String name;
     private String description;
     private double price;
+    private LocalDate shippingDate;
 
     public ItemDto() {
     }
 
-    public ItemDto(String id, String name, String description, double price) {
+    public ItemDto(String id, String name, String description, double price, LocalDate shippingDate) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
+        this.shippingDate = shippingDate;
     }
 
     public ItemDto(ItemDtoBuilder itemDtoBuilder) {
@@ -49,6 +46,10 @@ public class ItemDto {
         return price;
     }
 
+    public LocalDate getShippingDate() {
+        return shippingDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -62,5 +63,17 @@ public class ItemDto {
     @Override
     public int hashCode() {
         return Objects.hash(name, description, price);
+    }
+
+    @Override
+    @JsonValue
+    public String toString() {
+        return "ItemDto{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", price=" + price +
+                ", shippingDate=" + shippingDate +
+                '}';
     }
 }

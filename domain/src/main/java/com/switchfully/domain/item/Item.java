@@ -2,6 +2,7 @@ package com.switchfully.domain.item;
 
 import com.switchfully.domain.item.builders.ItemBuilder;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.UUID;
 
@@ -10,6 +11,7 @@ public class Item {
     private String name;
     private String description;
     private double price;
+    private LocalDate shippingDate;
 
     public Item(ItemBuilder itemBuilder) {
         name = itemBuilder.getName();
@@ -31,6 +33,10 @@ public class Item {
         return price;
     }
 
+    public LocalDate getShippingDate() {
+        return shippingDate;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -43,14 +49,8 @@ public class Item {
         this.price = price;
     }
 
-    @Override
-    public String toString() {
-        return "Item{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", price=" + price +
-                '}';
+    public void setShippingDate(LocalDate shippingDate) {
+        this.shippingDate = shippingDate;
     }
 
     @Override

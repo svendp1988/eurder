@@ -70,7 +70,7 @@ class ItemServiceTest {
                 .build();
         UpdateItemDto updateItemDto = new UpdateItemDto(item.getId(), "updatedName", "updatedDescription", 2);
         when(itemRepository.getItemById(item.getId())).thenReturn(item);
-        when(itemMapper.toItemDto(item)).thenReturn(new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice()));
+        when(itemMapper.toItemDto(item)).thenReturn(new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice(), null));
         ItemDto itemDto = itemService.updateItem(updateItemDto);
         assertEquals(item.getId(), itemDto.getId());
         assertEquals("updatedName", itemDto.getName());

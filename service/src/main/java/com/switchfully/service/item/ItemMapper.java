@@ -6,7 +6,6 @@ import com.switchfully.service.item.dto.ItemDto;
 import org.springframework.stereotype.Component;
 
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
-import static com.switchfully.service.item.dto.ItemDtoBuilder.itemDtoBuilder;
 
 @Component
 public class ItemMapper {
@@ -23,7 +22,7 @@ public class ItemMapper {
                 item.getId(),
                 item.getName(),
                 item.getDescription(),
-                item.getPrice()
-        );
+                item.getPrice(),
+                item.getShippingDate());
     }
 }

@@ -10,37 +10,27 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 public class Order {
-    private final String id = UUID.randomUUID().toString();
-    private Item item;
-    private int amount;
-    private LocalDate shippingDate;
+    private final String orderId = UUID.randomUUID().toString();
+    private Map<Item, Integer> orders;
     private double totalAmount;
 
-    public Order(Item item, int amount, LocalDate shippingDate) {
-        this.item = item;
-        this.amount = amount;
-        this.shippingDate = shippingDate;
+    public Order(Map<Item, Integer> orders) {
+        this.orders = orders;
         totalAmount = calculateTotalAmount();
     }
 
     private double calculateTotalAmount() {
-        return item.getPrice() * amount;
+        return orders.entrySet().stream()
+                .mapToDouble(entry -> entry.getKey().getPrice() * entry.getValue())
+                .sum();
     }
 
     public String getOrderId() {
-        return id;
+        return orderId;
     }
 
-    public Item getItem() {
-        return item;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public LocalDate getShippingDate() {
-        return shippingDate;
+    public Map<Item, Integer> getOrders() {
+        return orders;
     }
 
     public double getTotalAmount() {

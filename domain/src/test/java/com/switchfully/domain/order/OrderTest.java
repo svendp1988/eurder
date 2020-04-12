@@ -22,21 +22,20 @@ class OrderTest {
 
     @Test
     void calculateTotalAmount_returnsTotalPriceOfItemsInOrder() {
-        order = new Order(item, 2, null);
+        order = new Order(Map.of(item, 2));
         assertThat(order.getTotalAmount()).isEqualTo(5);
     }
 
     @Test
-    void shippingDateAndIdAreSet_uponInitialisationOfNewOrder() {
-        order = new Order(item, 2, LocalDate.now());
-        assertEquals(LocalDate.now(), order.getShippingDate());
+    void idIsSet_uponInitialisationOfNewOrder() {
+        order = new Order(Map.of(item, 2));
         assertNotNull(order.getOrderId());
     }
 
     @Test
     void getItems_returnsMapOfItems() {
-        order = new Order(item, 2, null);
-        assertThat(order.getItem()).isEqualTo(item);
-        assertEquals(2, order.getAmount());
+        order = new Order(Map.of(item, 2));
+        assertThat(order.getOrders().keySet()).contains(item);
+        assertThat(order.getOrders().values()).contains(2);
     }
 }

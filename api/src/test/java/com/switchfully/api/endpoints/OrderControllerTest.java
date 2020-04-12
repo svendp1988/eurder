@@ -7,13 +7,10 @@ import com.switchfully.service.order.OrderService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -23,10 +20,10 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class OrderControllerTest {
-    OrderDto order = new OrderDto("orderId", new ItemDto("id", "name", "description", 2.5), 2, LocalDate.now(), 5);
+    OrderDto order = new OrderDto("orderId", Map.of(new ItemDto("id", "name", "description", 2.5, null), 2), 5);
     List<OrderDto> orders = List.of(order);
     Authentication authentication = new UsernamePasswordAuthenticationToken("sven@order.com", "awesome");
-    OrderRequestDto orderRequestDto = new OrderRequestDto("id", 2);
+    OrderRequestDto orderRequestDto = new OrderRequestDto(Map.of("id", 2));
 
     OrderService orderService = mock(OrderService.class);
 

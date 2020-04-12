@@ -1,7 +1,6 @@
 package com.switchfully.service.order;
 
 import com.switchfully.domain.item.Item;
-import com.switchfully.domain.item.ItemRepository;
 import com.switchfully.domain.order.Order;
 import com.switchfully.service.item.ItemMapper;
 import com.switchfully.service.item.dto.ItemDto;
@@ -11,7 +10,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.time.LocalDate;
+import java.util.Map;
 
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -25,9 +24,9 @@ class OrderMapperIntegrationTest {
             .withDescription("description")
             .withPrice(2.5)
             .build();
-    ItemDto itemDto = new ItemDto("id", "name", "description", 2.5);
-    Order order = new Order(item, 2, LocalDate.now());
-    OrderRequestDto orderRequestDto = new OrderRequestDto("id", 2);
+    ItemDto itemDto = new ItemDto("id", "name", "description", 2.5, null);
+    Order order = new Order(Map.of(item, 2));
+    OrderRequestDto orderRequestDto = new OrderRequestDto(Map.of("id", 2));
 
     @Mock
     ItemMapper itemMapper;
@@ -37,10 +36,9 @@ class OrderMapperIntegrationTest {
 
     @Test
     void toNewOrder_returnsOrder() {
-        Order order = orderMapper.toNewOrder(item, 2, LocalDate.now().plusDays(7));
-        assertThat(order.getItem()).isEqualTo(item);
+        Order order = orderMapper.toNewOrder(Map.of(item, 2));
+        assertThat(order.getOrders().keySet()).contains(item);
         assertThat(order.getTotalAmount()).isEqualTo(5);
-        assertThat(order.getShippingDate()).isEqualTo(LocalDate.now().plusDays(7));
     }
 
     @Test
@@ -48,7 +46,6 @@ class OrderMapperIntegrationTest {
         when(itemMapper.toItemDto(item)).thenReturn(itemDto);
         OrderDto actualOrderDto = orderMapper.toDto(order);
         assertEquals(order.getOrderId(), actualOrderDto.getId());
-        assertEquals(order.getShippingDate(), actualOrderDto.getShippingDate());
         assertEquals(order.getTotalAmount(), actualOrderDto.getTotalAmount());
 
     }
