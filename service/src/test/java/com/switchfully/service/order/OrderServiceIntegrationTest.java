@@ -55,18 +55,18 @@ class OrderServiceIntegrationTest {
 
     @Test
     void whenItemInStock_dateIsSetToNextDay() {
-        when(itemRepository.getItemById("id")).thenReturn(item);
         when(itemRepository.getAmountOfItems(item)).thenReturn(3);
-        orderService.addOrder(authentication, orderRequestDto);
-        assertThat(item.getShippingDate()).isEqualTo(LocalDate.now().plusDays(1));
+        Item soldItem = new Item(item);
+        orderService.setCorrectShippingDateAndDecrementAmountInDatabase(item, soldItem, 1);
+        assertThat(soldItem.getShippingDate()).isEqualTo(LocalDate.now().plusDays(1));
     }
 
     @Test
     void whenItemNotInStock_dateIsSetTo7DaysFromNow() {
-        when(itemRepository.getItemById("id")).thenReturn(item);
         when(itemRepository.getAmountOfItems(item)).thenReturn(0);
-        orderService.addOrder(authentication, orderRequestDto);
-        assertThat(item.getShippingDate()).isEqualTo(LocalDate.now().plusDays(7));
+        Item soldItem = new Item(item);
+        orderService.setCorrectShippingDateAndDecrementAmountInDatabase(item, soldItem, 1);
+        assertThat(soldItem.getShippingDate()).isEqualTo(LocalDate.now().plusDays(7));
     }
 
     @Test
