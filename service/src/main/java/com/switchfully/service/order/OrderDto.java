@@ -2,7 +2,7 @@ package com.switchfully.service.order;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.switchfully.service.item.dto.ItemDto;
-import com.switchfully.service.item.dto.ItemDtoSerializer;
+import com.switchfully.service.serializers.ItemDtoSerializer;
 
 import java.util.Map;
 import java.util.Objects;

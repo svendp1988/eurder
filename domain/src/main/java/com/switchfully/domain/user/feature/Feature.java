@@ -13,9 +13,10 @@ public enum Feature {
     SEE_REPORT(UserRole.CUSTOMER),
     ADD_ITEM(UserRole.ADMIN),
     UPDATE_ITEM(UserRole.ADMIN),
-    VIEW_CUSTOMERS(UserRole.ADMIN);
+    VIEW_CUSTOMERS(UserRole.ADMIN),
+    VIEW_ITEMS_SHIPPING_TODAY(UserRole.ADMIN);
 
-    private UserRole[] roles;
+    private final UserRole[] roles;
 
     Feature(UserRole... roles) {this.roles = roles; }
 

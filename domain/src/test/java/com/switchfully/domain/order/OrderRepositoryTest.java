@@ -3,7 +3,6 @@ package com.switchfully.domain.order;
 import com.switchfully.domain.item.Item;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 

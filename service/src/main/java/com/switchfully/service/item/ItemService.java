@@ -2,6 +2,7 @@ package com.switchfully.service.item;
 
 import com.switchfully.domain.item.Item;
 import com.switchfully.domain.item.ItemRepository;
+import com.switchfully.domain.order.OrderRepository;
 import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
 import com.switchfully.service.item.dto.UpdateItemDto;
@@ -10,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class ItemService {

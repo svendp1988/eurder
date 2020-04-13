@@ -25,6 +25,7 @@ import java.util.Map;
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -50,7 +51,7 @@ class OrderServiceIntegrationTest {
     @Mock
     ItemRepository itemRepository;
     @InjectMocks
-    OrderService orderService = new OrderService(orderRepository, orderMapper, userRepository, userMapper, itemRepository);
+    OrderService orderService = new OrderService(orderRepository, orderMapper, userRepository, userMapper, itemRepository, itemMapper);
 
 
     @Test
@@ -64,6 +65,7 @@ class OrderServiceIntegrationTest {
     @Test
     void whenItemNotInStock_dateIsSetTo7DaysFromNow() {
         when(itemRepository.getAmountOfItems(item)).thenReturn(0);
+        doNothing().when(itemRepository).decrementItemAmount(item, 1);
         Item soldItem = new Item(item);
         orderService.setCorrectShippingDateAndDecrementAmountInDatabase(item, soldItem, 1);
         assertThat(soldItem.getShippingDate()).isEqualTo(LocalDate.now().plusDays(7));

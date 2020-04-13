@@ -1,8 +1,10 @@
 package com.switchfully.api.endpoints;
 
+import com.switchfully.service.item.dto.ItemDto;
 import com.switchfully.service.order.OrderDto;
 import com.switchfully.service.order.OrderRequestDto;
 import com.switchfully.service.order.OrderService;
+import com.switchfully.service.order.Report;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,5 +54,14 @@ public class OrderController {
     public OrderDto reOrder(Authentication authentication, @PathVariable String orderId) {
         LOGGER.info("Reordering previous order.");
         return orderService.reOrder(authentication, orderId);
+    }
+
+    @PreAuthorize("hasAuthority('VIEW_ITEMS_SHIPPING_TODAY')")
+    @GetMapping(path = "/report", produces = "application/json")
+    @ApiOperation(value = "Reporting items shipping today.", notes = "Admins can view a report of items shipping today.", response = List.class)
+    @ResponseStatus(HttpStatus.OK)
+    public List<Report> viewItemsShippingToday() {
+        LOGGER.info("Returning list of items shipping today.");
+        return orderService.viewItemsShippingToday();
     }
 }

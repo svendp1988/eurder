@@ -22,7 +22,7 @@ class FeatureTest {
     void getFeatureForAdmin_returnsListOfAllFeatures() {
         User user = testUserBuilder().buildAdmin();
         List<Feature> actualResult = Feature.getFeaturesForRoles(newArrayList(user.getRole().toString()));
-        List<Feature> expectedResult = List.of(Feature.ADD_ITEM, Feature.UPDATE_ITEM, Feature.VIEW_CUSTOMERS);
+        List<Feature> expectedResult = List.of(Feature.ADD_ITEM, Feature.UPDATE_ITEM, Feature.VIEW_CUSTOMERS, Feature.VIEW_ITEMS_SHIPPING_TODAY);
         assertEquals(expectedResult, actualResult);
     }
 }
