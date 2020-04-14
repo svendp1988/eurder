@@ -89,7 +89,7 @@ public class OrderService {
     }
 
     void setCorrectShippingDateAndDecrementAmountInDatabase(Item item, Item soldItem, int amount) {
-        LocalDate shippingDate = LocalDate.now(); //.plusDays(1);
+        LocalDate shippingDate = LocalDate.now().plusDays(1);
         if (itemRepository.getAmountOfItems(item) - amount < 0) {
             shippingDate = LocalDate.now().plusDays(7);
         }
