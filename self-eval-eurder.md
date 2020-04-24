@@ -82,9 +82,9 @@ Which choices did you make? (List your choices below, remove what is not relevan
  - [x] I did a "codereview" of my own code before declaring it "done".
 ### Comments: 
 ## Nice-To-Have stories
- - [ ] Story 4
+ - [x] Story 4
  - [x] Story 5
- - [ ] Story 6
+ - [x] Story 6
  - [ ] Story 9
  - [ ] Story 10
 ### Comments:
