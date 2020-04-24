@@ -3,6 +3,8 @@ package com.switchfully.domain.user;
 import com.switchfully.domain.user.builders.UserBuilder;
 import com.switchfully.domain.user.feature.UserRole;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import java.util.Objects;
 import java.util.UUID;
 

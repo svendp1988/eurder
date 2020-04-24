@@ -1,23 +1,38 @@
 package com.switchfully.domain.item;
 
+import com.sun.istack.Nullable;
 import com.switchfully.domain.item.builders.ItemBuilder;
 
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Objects;
-import java.util.UUID;
 
+@Entity
+@Table(name = "items")
 public class Item {
-    private String id = UUID.randomUUID().toString();
+    @Id
+    @GeneratedValue(generator = "item_id_seq", strategy = GenerationType.IDENTITY)
+    private long id;
+    @Column(name = "name")
     private String name;
+    @Column(name = "description")
     private String description;
+    @Column(name = "price")
     private double price;
+    @Column(name = "shipping_date")
+    @Nullable
     private LocalDate shippingDate;
+    @Column
+    private int amount;
+
+    public Item() {}
 
     public Item(Item item) {
         id = item.getId();
         name = item.getName();
         description = item.getDescription();
         price = item.getPrice();
+        amount = item.getAmount();
     }
 
     public Item(ItemBuilder itemBuilder) {
@@ -26,7 +41,7 @@ public class Item {
         price = itemBuilder.getPrice();
     }
 
-    public String getId() { return id; }
+    public long getId() { return id; }
 
     public String getName() {
         return name;
@@ -42,6 +57,10 @@ public class Item {
 
     public LocalDate getShippingDate() {
         return shippingDate;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     public void setName(String name) {
@@ -74,4 +93,5 @@ public class Item {
     public int hashCode() {
         return Objects.hash(name, description, price);
     }
+
 }

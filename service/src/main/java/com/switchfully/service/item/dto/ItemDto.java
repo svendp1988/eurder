@@ -1,9 +1,7 @@
 package com.switchfully.service.item.dto;
 
-import com.fasterxml.jackson.annotation.JsonValue;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.switchfully.service.serializers.ItemDtoSerializer;
 import com.switchfully.service.serializers.LocalDateSerializer;
 import com.switchfully.service.user.view.View;
 
@@ -12,7 +10,7 @@ import java.util.Objects;
 
 public class ItemDto {
     @JsonView(View.Public.class)
-    private String id;
+    private long id;
     @JsonView(View.Public.class)
     private String name;
     @JsonView(View.Public.class)
@@ -22,16 +20,19 @@ public class ItemDto {
     @JsonView(View.Restricted.class)
     @JsonSerialize(keyUsing = LocalDateSerializer.class)
     private LocalDate shippingDate;
+    @JsonView(View.Restricted.class)
+    private int amount;
 
     public ItemDto() {
     }
 
-    public ItemDto(String id, String name, String description, double price, LocalDate shippingDate) {
+    public ItemDto(long id, String name, String description, double price, LocalDate shippingDate, int amount) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.shippingDate = shippingDate;
+        this.amount = amount;
     }
 
     public ItemDto(ItemDtoBuilder itemDtoBuilder) {
@@ -39,9 +40,10 @@ public class ItemDto {
         name = itemDtoBuilder.getName();
         description = itemDtoBuilder.getDescription();
         price = itemDtoBuilder.getPrice();
+        amount = itemDtoBuilder.getAmount();
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
@@ -59,6 +61,10 @@ public class ItemDto {
 
     public LocalDate getShippingDate() {
         return shippingDate;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 
     @Override

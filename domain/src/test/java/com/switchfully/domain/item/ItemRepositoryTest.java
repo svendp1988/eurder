@@ -2,76 +2,47 @@ package com.switchfully.domain.item;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.test.annotation.DirtiesContext;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.switchfully.domain.testbuilders.TestItemBuilder.testItemBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@DataJpaTest
+@AutoConfigureTestDatabase
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@ComponentScan(basePackages = "com.switchfully.domain")
 class ItemRepositoryTest {
+    @Autowired
     ItemRepository itemRepository;
 
-    @BeforeEach
-    void setUp() {
-        itemRepository = new ItemRepository();
+    @Test
+    void repoIsThere() {
+        assertThat(itemRepository).isNotNull();
     }
 
     @Test
-    void addingAnItem_shouldReturnTheSameItem() {
-        Item itemToAdd = testItemBuilder().build();
-        Item actualItem = itemRepository.addItem(itemToAdd);
-        assertEquals(itemToAdd, actualItem);
+    void createItem() {
+        Item expected = testItemBuilder().build();
+        itemRepository.save(expected);
+        Item actual = itemRepository.findById(1L).get();
+        assertThat(actual).isEqualTo(expected);
     }
 
     @Test
-    void addingTheSameMoreThanOnce_shouldResultInAddingToCount_forValueInDatabase() {
-        Item firstItemToAdd = testItemBuilder().build();
-        Item secondItemToAdd = testItemBuilder().build();
-        itemRepository.addItem(firstItemToAdd);
-        itemRepository.addItem(secondItemToAdd);
-        assertThat(itemRepository.viewAllItems().get(String.format("id: %s, itemname: %s", firstItemToAdd.getId(), firstItemToAdd.getName()))).isEqualTo(2);
+    void findAll() {
+        List<Item> items = List.of(testItemBuilder().build(), testItemBuilder().withName("anotherItem").build());
+        itemRepository.saveAll(items);
+        List<Item> actual = itemRepository.findAll();
+        assertThat(actual).hasSameElementsAs(items);
     }
 
-    @Test
-    void viewingAllItems_returnsMapOfItemNames_andNumberOfItemsInStock() {
-        Item firstItemToAdd = testItemBuilder().build();
-        Item secondItemToAdd = testItemBuilder().build();
-        itemRepository.addItem(firstItemToAdd);
-        itemRepository.addItem(secondItemToAdd);
-        Map<String, Integer> actualItemMap = itemRepository.viewAllItems();
-        assertThat(actualItemMap.containsKey(firstItemToAdd.getName()));
-        assertThat(actualItemMap.containsValue(2));
-    }
-
-    @Test
-    void getItemById_returnsItemByLookingUpIdInDatabase() {
-        Item item = testItemBuilder().build();
-        itemRepository.addItem(item);
-        assertEquals(item, itemRepository.getItemById(item.getId()));
-    }
-
-    @Test
-    void decrementingLastItemInDatabase_leadsToValue0() {
-        Item item = testItemBuilder().build();
-        itemRepository.addItem(item);
-        itemRepository.decrementItemAmount(item, 1);
-        assertThat(itemRepository.viewAllItems().containsValue(0));
-    }
-
-    @Test
-    void decrementingAmountInDatabase_canLeadToNegativeValue() {
-        Item item = testItemBuilder().build();
-        itemRepository.addItem(item);
-        itemRepository.decrementItemAmount(item, 4);
-        assertThat(itemRepository.viewAllItems().containsValue(-3));
-    }
-
-    @Test
-    void getAmountOfItems_returnsItemsLeftInStock() {
-        Item item = testItemBuilder().build();
-        itemRepository.addItem(item);
-        itemRepository.addItem(item);
-        assertThat(itemRepository.getAmountOfItems(item)).isEqualTo(2);
-    }
 }

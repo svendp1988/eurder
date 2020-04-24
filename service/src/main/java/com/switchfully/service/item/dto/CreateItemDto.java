@@ -1,26 +1,26 @@
 package com.switchfully.service.item.dto;
 
-import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class CreateItemDto {
     private String name;
     private String description;
     private double price;
+    private int amount;
 
     public CreateItemDto() {
     }
 
-    public CreateItemDto(String name, String description, double price) {
+    public CreateItemDto(String name, String description, double price, int amount) {
         this.name = name;
         this.description = description;
         this.price = price;
+        this.amount = amount;
     }
 
     public CreateItemDto(ItemDtoBuilder itemDtoBuilder) {
         name = itemDtoBuilder.getName();
         description = itemDtoBuilder.getDescription();
         price = itemDtoBuilder.getPrice();
+        amount = itemDtoBuilder.getAmount();
     }
 
     public String getName() {
@@ -33,5 +33,9 @@ public class CreateItemDto {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

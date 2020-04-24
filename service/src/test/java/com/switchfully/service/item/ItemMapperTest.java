@@ -8,8 +8,11 @@ import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
 import org.junit.jupiter.api.Test;
 
+import java.util.List;
+
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 import static com.switchfully.service.testbuilders.TestItemDtoBuilder.testItemDtoBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -20,23 +23,28 @@ class ItemMapperTest {
             .withName("name")
             .withDescription("description")
             .withPrice(0.0)
+            .withAmount(1)
             .build();
     ItemMapper itemMapper = new ItemMapper();
 
     @Test
     void toNewItem_returnsItemWithSameValues() {
         Item actualItem = itemMapper.toNewItem(createItemDto);
-        assertEquals(createItemDto.getName(), actualItem.getName());
-        assertEquals(createItemDto.getDescription(), actualItem.getDescription());
-        assertEquals(createItemDto.getPrice(), actualItem.getPrice());
+        assertThat(actualItem).isEqualToComparingOnlyGivenFields(createItemDto, "name", "description", "price");
     }
 
     @Test
     void toDto_returnsDtoWithSameValues() {
         ItemDto actualItemDto = itemMapper.toItemDto(item);
-        assertEquals(item.getId(), actualItemDto.getId());
-        assertEquals(item.getName(), actualItemDto.getName());
-        assertEquals(item.getDescription(), actualItemDto.getDescription());
-        assertEquals(item.getPrice(), actualItemDto.getPrice());
+        assertThat(actualItemDto).isEqualToComparingFieldByField(item);
+    }
+
+    @Test
+    void toDtoOfList_returnsListOfDtos() {
+        Item item = itemBuilder().build();
+        List<Item> items = List.of(item);
+        ItemDto expectedInList = itemMapper.toItemDto(item);
+        List<ItemDto> actual = itemMapper.toItemDto(items);
+        assertThat(actual).containsExactly(expectedInList);
     }
 }

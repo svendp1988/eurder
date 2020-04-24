@@ -1,0 +1,2 @@
+-- INSERT INTO eurder.addresses (street, street_number, postal_code, city) VALUES ('street', 'streetNumber', 'postalCode', 'city');
+INSERT INTO eurder.users (first_name, last_name, email, user_role, password, address_id) VALUES ('admin', 'order', 'admin@order.com', 'ADMIN', 'root', 3);

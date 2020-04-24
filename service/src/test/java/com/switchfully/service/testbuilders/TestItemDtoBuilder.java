@@ -6,10 +6,11 @@ import com.switchfully.service.item.dto.ItemDto;
 import static com.switchfully.service.item.dto.ItemDtoBuilder.itemDtoBuilder;
 
 public class TestItemDtoBuilder {
-    private String id = "id";
+    private long id = 1L;
     private String name = "name";
     private String description = "description";
     private double price = 0.0;
+    private int amount = 0;
 
     private TestItemDtoBuilder() {
     }
@@ -24,6 +25,7 @@ public class TestItemDtoBuilder {
                 .withName(name)
                 .withDescription(description)
                 .withPrice(price)
+                .withAmount(amount)
                 .buildCreateItemDto();
     }
 
@@ -33,10 +35,11 @@ public class TestItemDtoBuilder {
                 .withName(name)
                 .withDescription(description)
                 .withPrice(price)
+                .withAmount(amount)
                 .buildItemDto();
     }
 
-    public TestItemDtoBuilder withId(String id) {
+    public TestItemDtoBuilder withId(long id) {
         this.id = id;
         return this;
     }
@@ -56,7 +59,12 @@ public class TestItemDtoBuilder {
         return this;
     }
 
-    public String getId() {
+    public TestItemDtoBuilder withAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -70,5 +78,9 @@ public class TestItemDtoBuilder {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

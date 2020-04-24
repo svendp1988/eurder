@@ -6,7 +6,6 @@ import com.switchfully.domain.order.Order;
 import com.switchfully.domain.order.OrderRepository;
 import com.switchfully.domain.user.UserRepository;
 import com.switchfully.service.address.AddressDto;
-import com.switchfully.service.address.AddressMapper;
 import com.switchfully.service.item.ItemMapper;
 import com.switchfully.service.item.dto.ItemDto;
 import com.switchfully.service.user.UserMapper;
@@ -21,6 +20,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 
 @Service
 public class OrderService {
@@ -45,7 +46,7 @@ public class OrderService {
         String userId = getUserId(authentication);
         Map<Item, Integer> orders = new HashMap<>();
         orderRequestDto.getOrder().forEach((key, value) -> {
-            Item item = itemRepository.getItemById(key);
+            Item item = itemBuilder().build();
             Item soldItem = new Item(item);
             int amount = value;
             setCorrectShippingDateAndDecrementAmountInDatabase(item, soldItem, amount);
@@ -90,10 +91,10 @@ public class OrderService {
 
     void setCorrectShippingDateAndDecrementAmountInDatabase(Item item, Item soldItem, int amount) {
         LocalDate shippingDate = LocalDate.now(); //.plusDays(1);
-        if (itemRepository.getAmountOfItems(item) - amount < 0) {
+        if (itemRepository.count() - amount < 0) {
             shippingDate = LocalDate.now().plusDays(7);
         }
-        itemRepository.decrementItemAmount(item, amount);
+        itemRepository.count();
         soldItem.setShippingDate(shippingDate);
     }
 

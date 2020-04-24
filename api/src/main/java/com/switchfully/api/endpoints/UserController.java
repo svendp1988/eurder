@@ -5,7 +5,7 @@ import com.switchfully.service.user.dto.CreateUserDto;
 import com.switchfully.service.user.dto.UserDto;
 import com.switchfully.service.user.UserService;
 import com.switchfully.service.user.view.View;
-import io.swagger.annotations.ApiOperation;
+//import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +29,7 @@ public class UserController {
     }
 
     @PostMapping(consumes = "application/json", produces = "application/json")
-    @ApiOperation(value = "Register as a customer", notes = "Everyone can register as a customer.", response = UserDto.class)
+//    @ApiOperation(value = "Register as a customer", notes = "Everyone can register as a customer.", response = UserDto.class)
     @ResponseStatus(HttpStatus.CREATED)
     public UserDto register(@RequestBody CreateUserDto newCustomer) {
         LOGGER.info("Registering a new customer.");
@@ -39,7 +39,7 @@ public class UserController {
     @JsonView(View.Public.class)
     @PreAuthorize("hasAuthority('VIEW_CUSTOMERS')")
     @GetMapping(produces = "application/json")
-    @ApiOperation(value = "Get all registered customers", notes = "A list of all the registered customers will be returned" , response = UserDto.class)
+//    @ApiOperation(value = "Get all registered customers", notes = "A list of all the registered customers will be returned" , response = UserDto.class)
     @ResponseStatus(HttpStatus.OK)
     public Collection<UserDto> viewAllCustomers() {
         LOGGER.info("Returning all members");
@@ -49,7 +49,7 @@ public class UserController {
     @JsonView(View.Public.class)
     @PreAuthorize("hasAuthority('VIEW_CUSTOMERS')")
     @GetMapping(params = "{id}", produces = "application/json")
-    @ApiOperation(value = "Get customer by id.", notes = "Customer with id will be returned" , response = UserDto.class)
+//    @ApiOperation(value = "Get customer by id.", notes = "Customer with id will be returned" , response = UserDto.class)
     @ResponseStatus(HttpStatus.OK)
     public UserDto getById(@RequestParam String id) {
         LOGGER.info("Returning customer with id: " + id);

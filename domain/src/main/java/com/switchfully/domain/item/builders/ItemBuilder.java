@@ -6,6 +6,7 @@ public class ItemBuilder {
     private String name;
     private String description;
     private double price;
+    private int amount;
 
     protected ItemBuilder() {
     }
@@ -43,5 +44,10 @@ public class ItemBuilder {
 
     public double getPrice() {
         return price;
+    }
+
+    public ItemBuilder withAmount(int amount) {
+        this.amount = amount;
+        return this;
     }
 }
