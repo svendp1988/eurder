@@ -1,5 +1,6 @@
 package com.switchfully.domain.item;
 
+import com.google.common.annotations.VisibleForTesting;
 import com.sun.istack.Nullable;
 import com.switchfully.domain.item.builders.ItemBuilder;
 
@@ -8,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "items", schema = "eurder")
+@Table(name = "items")
 public class Item {
     @Id
     @GeneratedValue(generator = "item_id_seq", strategy = GenerationType.IDENTITY)

@@ -3,17 +3,37 @@ package com.switchfully.domain.user;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.switchfully.domain.user.builders.AddressBuilder;
 
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "addresses")
 public class Address {
-    private final String id;
-    private final String street;
-    private final String streetNumber;
-    private final String postalCode;
-    private final String city;
+    @Id
+    @GeneratedValue(generator = "address_id_seq")
+    @Column(name = "address_id")
+    private long id;
+    @Column(name = "street")
+    private String street;
+    @Column(name = "street_number")
+    private String streetNumber;
+    @Column(name = "postal_code")
+    private String postalCode;
+    @Column(name = "city")
+    private String city;
 
-    public String getId() {
+    public Address() {
+    }
+
+    public Address(AddressBuilder addressBuilder) {
+        street = addressBuilder.getStreet();
+        streetNumber = addressBuilder.getStreetNumber();
+        postalCode = addressBuilder.getPostalCode();
+        city = addressBuilder.getCity();
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -33,13 +53,6 @@ public class Address {
         return city;
     }
 
-    public Address(AddressBuilder addressBuilder) {
-        id = UUID.randomUUID().toString();
-        street = addressBuilder.getStreet();
-        streetNumber = addressBuilder.getStreetNumber();
-        postalCode = addressBuilder.getPostalCode();
-        city = addressBuilder.getCity();
-    }
 
     @Override
     public boolean equals(Object o) {

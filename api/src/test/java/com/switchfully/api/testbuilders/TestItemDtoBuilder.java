@@ -9,7 +9,7 @@ public class TestItemDtoBuilder {
     private String name = "name";
     private String description = "description";
     private double price = 0.0;
-    private int amount;
+    private int amount = 0;
 
     private TestItemDtoBuilder() {
     }
@@ -48,6 +48,11 @@ public class TestItemDtoBuilder {
         return this;
     }
 
+    public TestItemDtoBuilder withAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
+
     public long getId() {
         return id;
     }
@@ -63,4 +68,9 @@ public class TestItemDtoBuilder {
     public double getPrice() {
         return price;
     }
+
+    public int getAmount() {
+        return amount;
+    }
+
 }

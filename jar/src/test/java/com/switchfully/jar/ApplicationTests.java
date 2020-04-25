@@ -26,6 +26,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -33,7 +34,6 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import java.security.Principal;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -149,7 +149,7 @@ class ApplicationTests {
         void adminCanAddItems() throws Exception {
             String actual = mockMvc
                     .perform(post("/items")
-                            .with(authentication(authentication))
+                            .with(SecurityMockMvcRequestPostProcessors.authentication(authentication))
                             .contentType(MediaType.APPLICATION_JSON)
                             .content(new ObjectMapper().writeValueAsString(createItemDto)))
                     .andExpect(status().isCreated())

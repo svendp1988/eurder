@@ -11,11 +11,11 @@ import java.util.List;
 
 @Service
 public class AuthenticationService {
-    private List<User> usersList = new ArrayList<>();
+    private final List<User> usersList = new ArrayList<>();
 
     @Autowired
     public AuthenticationService(UserRepository userRepository) {
-        usersList.addAll(userRepository.getAllUsers());
+        usersList.addAll(userRepository.findAll());
     }
 
     public User getUser(String email, String password) {

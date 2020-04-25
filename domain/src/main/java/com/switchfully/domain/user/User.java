@@ -2,20 +2,36 @@ package com.switchfully.domain.user;
 
 import com.switchfully.domain.user.builders.UserBuilder;
 import com.switchfully.domain.user.feature.UserRole;
+import org.hibernate.engine.profile.Fetch;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.util.Objects;
 import java.util.UUID;
 
+@Entity
+@Table(name = "users")
 public class User {
-    private final String id = UUID.randomUUID().toString();
-    private final String firstName;
-    private final String lastName;
-    private final String email;
-    private final UserRole role;
+    @Id
+    @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.IDENTITY)
+    @Column(name = "user_id")
+    private long id;
+    @Column(name = "first_name")
+    private String firstName;
+    @Column(name = "last_name")
+    private String lastName;
+    @Column(name = "email")
+    private String email;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "user_role")
+    private UserRole role;
+    @Column(name = "password")
     private String password;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "address_id")
     private Address address;
+
+    public User() {
+    }
 
     public User(UserBuilder userBuilder) {
         firstName = userBuilder.getFirstName();
@@ -26,7 +42,7 @@ public class User {
         address = userBuilder.getAddress();
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 

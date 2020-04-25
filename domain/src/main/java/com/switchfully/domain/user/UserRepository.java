@@ -3,9 +3,11 @@ package com.switchfully.domain.user;
 //import com.switchfully.domain.exceptions.EmailAlreadyRegisteredException; //TODO: check exceptions
 
 import com.switchfully.domain.exceptions.UserNotFoundException;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -15,13 +17,10 @@ import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
 import static com.switchfully.domain.user.feature.UserRole.CUSTOMER;
 
 @Repository
-public class UserRepository {
-    private final Map<String, User> userDatabase;
+public interface UserRepository extends CrudRepository<User, Long> {
 
-    public UserRepository() {
-        this.userDatabase = new ConcurrentHashMap<>();
-        createDefaultData();
-    }
+    @Override
+    public List<User> findAll();
 
 //    public boolean isEmailAvailable(String email) {
 //        if (userRepository.values().stream()
@@ -30,63 +29,4 @@ public class UserRepository {
 //        }
 //        return true;
 //    }
-
-    public User registerAsCustomer(User newCustomer) {
-        userDatabase.put(newCustomer.getId(), newCustomer);
-        return newCustomer;
-    }
-
-    public User registerAsAdmin(User newAdmin) {
-        userDatabase.put(newAdmin.getId(), newAdmin);
-        return newAdmin;
-    }
-
-
-    public Collection<User> getAllCustomers() {
-        return userDatabase.values().stream()
-                .filter(user -> user.getRole().equals(CUSTOMER))
-                .collect(Collectors.toList());
-    }
-
-    public Collection<User> getAllUsers() {
-        return userDatabase.values();
-    }
-
-    public User getById(String id) {
-        var foundUser = userDatabase.get(id);
-        if (foundUser == null) {
-            throw new UserNotFoundException();
-        }
-        return foundUser;
-    }
-
-    private void createDefaultData() {
-        User defaultAdmin = userBuilder()
-                .withFirstName("admin")
-                .withLastName("istrator")
-                .withEmail("admin@order.com")
-                .withLastName("Admin")
-                .withPassword("root")
-                .withAddress(addressBuilder()
-                        .withStreet("street")
-                        .withStreetNumber("1")
-                        .withPostalCode("1000")
-                        .withCity("city")
-                        .build())
-                .buildAdmin();
-        User defaultCustomer = userBuilder()
-                .withFirstName("Sven")
-                .withLastName("De Potter")
-                .withEmail("sven@order.com")
-                .withPassword("awesome")
-                .withAddress(addressBuilder()
-                        .withStreet("Sint-TrudoStraat")
-                        .withStreetNumber("7A")
-                        .withPostalCode("3891")
-                        .withCity("Buvingen")
-                        .build())
-                .buildCustomer();
-        registerAsAdmin(defaultAdmin);
-        registerAsCustomer(defaultCustomer);
-    }
 }

@@ -42,6 +42,11 @@ public class TestItemBuilder {
         return this;
     }
 
+    public TestItemBuilder withAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
+
     public String getName() {
         return name;
     }

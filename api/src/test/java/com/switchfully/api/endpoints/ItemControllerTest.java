@@ -10,10 +10,13 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Map;
 
 import static com.switchfully.api.testbuilders.TestItemDtoBuilder.testItemDtoBuilder;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -25,7 +28,7 @@ class ItemControllerTest {
             .withPrice(5)
             .buildTestUpdateItemDto();
     CreateItemDto createItemDto = testItemDtoBuilder().buildTestCreateItemDto();
-    Map<String, Integer> items = Map.of("name", 1);
+    List<ItemDto> items = List.of(itemDto);
 
     @Mock
     ItemService itemService;
@@ -35,27 +38,28 @@ class ItemControllerTest {
 
     @Test
     void addItem_returnsDto() {
-        when(itemService.addItem(createItemDto)).thenReturn(itemDto);
+        when(itemService.addItem(any(CreateItemDto.class))).thenReturn(itemDto);
         assertEquals(itemDto, itemController.addItem(createItemDto));
     }
 
     @Test
     void viewAllItems_returnsMapFromService() {
-//        when(itemService.findAll()).thenReturn(items);
+        when(itemService.findAll()).thenReturn(items);
         assertEquals(items, itemController.viewAllItems());
     }
 
     @Test
-    void getItemByName_returnsCorrectItemFromService() {
-//        when(itemService.getItemById("id")).thenReturn(itemDto);
-//        assertEquals(itemDto, itemController.getItemById("id"));
+    void getItemById_returnsCorrectItemFromService() {
+        when(itemService.findById(any(Long.class))).thenReturn(itemDto);
+        assertEquals(itemDto, itemController.getItemById(1L));
     }
 
     @Test
     void updateItem_returnsDtoWithUpdatedValues() {
-        ItemDto itemDto = new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice(), null, 2);
+        ItemDto itemDto = new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice(), null, updateItemDto.getAmount());
         when(itemService.updateItem(updateItemDto)).thenReturn(itemDto);
         ItemDto actualItemDto = itemController.updateItem(updateItemDto);
+        assertThat(actualItemDto).isEqualToIgnoringGivenFields(updateItemDto, "shippingDate");
         assertEquals(actualItemDto.getId(), updateItemDto.getId());
         assertEquals(actualItemDto.getName(), updateItemDto.getName());
         assertEquals(actualItemDto.getDescription(), updateItemDto.getDescription());
