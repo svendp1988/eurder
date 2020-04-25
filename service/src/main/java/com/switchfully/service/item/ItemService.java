@@ -7,6 +7,7 @@ import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
 import com.switchfully.service.item.dto.UpdateItemDto;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,6 +27,7 @@ public class ItemService {
         return itemMapper.toItemDto(itemRepository.save(itemMapper.toNewItem(createItemDto)));
     }
 
+    @Query
     public List<ItemDto> findAll() {
         return itemMapper.toItemDto(itemRepository.findAll());
     }
@@ -43,6 +45,8 @@ public class ItemService {
         item.setName(updateItemDto.getName());
         item.setDescription(updateItemDto.getDescription());
         item.setPrice(updateItemDto.getPrice());
+        item.setAmount(updateItemDto.getAmount());
+        itemRepository.save(item);
         return itemMapper.toItemDto(item);
     }
 }

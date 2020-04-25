@@ -46,8 +46,13 @@ public class ItemBuilder {
         return price;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
     public ItemBuilder withAmount(int amount) {
         this.amount = amount;
         return this;
     }
+
 }

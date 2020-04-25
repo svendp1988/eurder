@@ -8,10 +8,11 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Table(name = "items")
+@Table(name = "items", schema = "eurder")
 public class Item {
     @Id
     @GeneratedValue(generator = "item_id_seq", strategy = GenerationType.IDENTITY)
+    @Column(name = "item_id")
     private long id;
     @Column(name = "name")
     private String name;
@@ -39,6 +40,7 @@ public class Item {
         name = itemBuilder.getName();
         description = itemBuilder.getDescription();
         price = itemBuilder.getPrice();
+        amount = itemBuilder.getAmount();
     }
 
     public long getId() { return id; }
@@ -79,6 +81,10 @@ public class Item {
         this.shippingDate = shippingDate;
     }
 
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -93,5 +99,4 @@ public class Item {
     public int hashCode() {
         return Objects.hash(name, description, price);
     }
-
 }

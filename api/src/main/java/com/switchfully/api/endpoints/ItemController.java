@@ -48,10 +48,10 @@ public class ItemController {
     }
 
     @PreAuthorize("hasAuthority('GET_ITEM_BY_ID')")
-    @GetMapping(params = "{id}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = "application/json")
 //    @ApiOperation(value = "Getting item by id", notes = "Customers can get items by id.", response = ItemDto.class)
     @ResponseStatus(HttpStatus.OK)
-    public ItemDto getItemById(@RequestParam long id) {
+    public ItemDto getItemById(@PathVariable long id) {
         LOGGER.info("Returning item by id.");
         return itemService.findById(id);
     }
