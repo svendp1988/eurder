@@ -1,0 +1,4 @@
+INSERT INTO addresses (address_id, street, street_number, postal_code, city) VALUES (1, 'street', 'streetNumber', 'postalCode', 'city');
+INSERT INTO addresses (address_id, street, street_number, postal_code, city) VALUES (2, 'aStreet', 'aStreetNumber', 'aPostalCode', 'aCity');
+-- INSERT INTO users (user_id, first_name, last_name, email, user_role, password, address_id) VALUES (1, 'firstName', 'lastName', 'email', 'ADMIN', 'password', 1);
+-- INSERT INTO users (user_id, first_name, last_name, email, user_role, password, address_id) VALUES (2, 'aFirstName', 'aLastName', 'aEmail', 'CUSTOMER', 'aPassword', 2);

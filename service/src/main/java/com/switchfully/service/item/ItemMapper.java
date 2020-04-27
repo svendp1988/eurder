@@ -5,6 +5,9 @@ import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 
 @Component
@@ -14,6 +17,7 @@ public class ItemMapper {
                 .withName(createItemDto.getName())
                 .withDescription(createItemDto.getDescription())
                 .withPrice(createItemDto.getPrice())
+                .withAmount(createItemDto.getAmount())
                 .build();
     }
 
@@ -23,6 +27,13 @@ public class ItemMapper {
                 item.getName(),
                 item.getDescription(),
                 item.getPrice(),
-                item.getShippingDate());
+                item.getShippingDate(),
+                item.getAmount());
+    }
+
+    public List<ItemDto> toItemDto(List<Item> items) {
+        return items.stream()
+                .map(this::toItemDto)
+                .collect(Collectors.toList());
     }
 }

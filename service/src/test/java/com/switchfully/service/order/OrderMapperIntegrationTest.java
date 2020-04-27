@@ -23,8 +23,9 @@ class OrderMapperIntegrationTest {
             .withName("name")
             .withDescription("description")
             .withPrice(2.5)
+            .withAmount(2)
             .build();
-    ItemDto itemDto = new ItemDto("id", "name", "description", 2.5, null);
+    ItemDto itemDto = new ItemDto(1L, "name", "description", 2.5, null, 2);
     Order order = new Order(Map.of(item, 2));
     OrderRequestDto orderRequestDto = new OrderRequestDto(Map.of("id", 2));
 

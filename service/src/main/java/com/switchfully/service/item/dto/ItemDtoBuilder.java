@@ -4,10 +4,11 @@ import com.switchfully.domain.item.Item;
 import com.switchfully.domain.item.builders.ItemBuilder;
 
 public class ItemDtoBuilder {
-    private String id;
+    private long id;
     private String name;
     private String description;
     private double price;
+    private int amount;
 
     private ItemDtoBuilder() {
     }
@@ -22,7 +23,7 @@ public class ItemDtoBuilder {
 
     public ItemDto buildItemDto() { return new ItemDto(this);}
 
-    public ItemDtoBuilder withId(String id) {
+    public ItemDtoBuilder withId(long id) {
         this.id = id;
         return this;
     }
@@ -42,7 +43,12 @@ public class ItemDtoBuilder {
         return this;
     }
 
-    public String getId() {
+    public ItemDtoBuilder withAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
+
+    public long getId() {
         return id;
     }
 
@@ -56,5 +62,9 @@ public class ItemDtoBuilder {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

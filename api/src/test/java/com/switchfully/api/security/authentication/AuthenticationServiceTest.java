@@ -3,14 +3,24 @@ package com.switchfully.api.security.authentication;
 import com.switchfully.domain.user.User;
 import com.switchfully.domain.user.UserRepository;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 
 import static com.switchfully.domain.user.builders.AddressBuilder.addressBuilder;
 import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
 
+@SpringBootTest(classes = {AuthenticationService.class, UserRepository.class})
+@ComponentScan(basePackages = "com.switchfully")
 class AuthenticationServiceTest {
-    UserRepository userRepository = new UserRepository();
-    AuthenticationService authenticationService = new AuthenticationService(userRepository);
+
+    @Autowired
+    ApplicationContext applicationContext;
+    @Autowired
+    AuthenticationService authenticationService;
+
     @Test
     void whenProvidedWithCorrectEmail_andPassword_returnsCorrectUser() {
         String email = "admin@order.com";

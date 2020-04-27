@@ -1,0 +1,1 @@
+SET CURRENT_SCHEMA=eurder;

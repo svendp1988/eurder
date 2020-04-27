@@ -1,5 +1,7 @@
 package com.switchfully.service.user;
 
+import com.switchfully.domain.user.Address;
+import com.switchfully.domain.user.AddressRepository;
 import com.switchfully.domain.user.User;
 import com.switchfully.service.address.AddressMapper;
 import com.switchfully.service.user.dto.CreateUserDto;
@@ -7,6 +9,14 @@ import com.switchfully.service.user.dto.UserDto;
 import com.switchfully.service.user.role.UserRoleDto;
 import com.switchfully.service.user.role.UserRoleMapper;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 
 import java.util.Collection;
@@ -16,10 +26,19 @@ import static com.switchfully.service.testbuilders.TestUserDtoBuilder.testUserDt
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.mockingDetails;
 
-
+@ExtendWith(MockitoExtension.class)
 class UserMapperTest {
-    UserMapper userMapper = new UserMapper(new AddressMapper(), new UserRoleMapper());
+
+    UserRoleMapper userRoleMapper = new UserRoleMapper();
+    AddressMapper addressMapper = mock(AddressMapper.class);
+    AddressRepository addressRepository = mock(AddressRepository.class);
+
+
+    @InjectMocks
+    UserMapper userMapper = new UserMapper(addressMapper, userRoleMapper, addressRepository);
 
     @Test
     void toNewUser_createsAndReturnsANewUserObject() {

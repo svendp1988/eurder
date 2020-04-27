@@ -1,5 +1,7 @@
 package com.switchfully.service.user;
 
+import com.switchfully.domain.user.Address;
+import com.switchfully.domain.user.AddressRepository;
 import com.switchfully.domain.user.User;
 import com.switchfully.service.address.AddressMapper;
 import com.switchfully.service.user.dto.CreateUserDto;
@@ -12,26 +14,29 @@ import java.util.Collection;
 import java.util.stream.Collectors;
 
 import static com.switchfully.domain.user.builders.UserBuilder.userBuilder;
-import static com.switchfully.service.user.dto.UserDtoBuilder.userDtoBuilder;
 
 @Component
 public class UserMapper {
-    private AddressMapper addressMapper;
-    private UserRoleMapper userRoleMapper;
+    private final AddressMapper addressMapper;
+    private final UserRoleMapper userRoleMapper;
+    private final AddressRepository addressRepository;
 
     @Autowired
-    public UserMapper(AddressMapper addressMapper, UserRoleMapper userRoleMapper) {
+    public UserMapper(AddressMapper addressMapper, UserRoleMapper userRoleMapper, AddressRepository addressRepository) {
         this.addressMapper = addressMapper;
         this.userRoleMapper = userRoleMapper;
+        this.addressRepository = addressRepository;
     }
 
     public User toNewUser(CreateUserDto createUserDto) {
+        Address address = addressMapper.toAddress(createUserDto.getAddressDto());
+        addressRepository.save(address);
         return userBuilder()
                 .withFirstName(createUserDto.getFirstName())
                 .withLastName(createUserDto.getLastName())
                 .withEmail(createUserDto.getEmail())
                 .withPassword(createUserDto.getPassword())
-                .withAddress(addressMapper.toAddress(createUserDto.getAddressDto()))
+                .withAddress(address)
                 .buildCustomer();
     }
 

@@ -9,6 +9,7 @@ public class TestItemBuilder {
     private String name = "name";
     private String description = "description";
     private double price = 0.0;
+    private int amount = 0;
 
     private TestItemBuilder() {
     }
@@ -22,6 +23,7 @@ public class TestItemBuilder {
                 .withName(name)
                 .withDescription(description)
                 .withPrice(price)
+                .withAmount(amount)
                 .build();
     }
 
@@ -40,6 +42,11 @@ public class TestItemBuilder {
         return this;
     }
 
+    public TestItemBuilder withAmount(int amount) {
+        this.amount = amount;
+        return this;
+    }
+
     public String getName() {
         return name;
     }
@@ -50,5 +57,9 @@ public class TestItemBuilder {
 
     public double getPrice() {
         return price;
+    }
+
+    public int getAmount() {
+        return amount;
     }
 }

@@ -40,7 +40,7 @@ class UserControllerTest {
 
     @Test
     void getById_returnsDtoWithGivenId() {
-        when(userService.getById("id")).thenReturn(userDto);
-        assertThat(userController.getById("id")).isEqualTo(userDto);
+        when(userService.getById(1L)).thenReturn(userDto);
+        assertThat(userController.getById(1L)).isEqualTo(userDto);
     }
 }

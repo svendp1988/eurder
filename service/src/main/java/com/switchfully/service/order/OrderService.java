@@ -5,8 +5,8 @@ import com.switchfully.domain.item.ItemRepository;
 import com.switchfully.domain.order.Order;
 import com.switchfully.domain.order.OrderRepository;
 import com.switchfully.domain.user.UserRepository;
+import com.switchfully.domain.user.feature.UserRole;
 import com.switchfully.service.address.AddressDto;
-import com.switchfully.service.address.AddressMapper;
 import com.switchfully.service.item.ItemMapper;
 import com.switchfully.service.item.dto.ItemDto;
 import com.switchfully.service.user.UserMapper;
@@ -21,6 +21,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 
 @Service
 public class OrderService {
@@ -42,36 +44,37 @@ public class OrderService {
     }
 
     public OrderDto addOrder(Authentication authentication, OrderRequestDto orderRequestDto) {
-        String userId = getUserId(authentication);
+        long userId = getUserId(authentication);
         Map<Item, Integer> orders = new HashMap<>();
         orderRequestDto.getOrder().forEach((key, value) -> {
-            Item item = itemRepository.getItemById(key);
+            Item item = itemBuilder().build();
             Item soldItem = new Item(item);
             int amount = value;
             setCorrectShippingDateAndDecrementAmountInDatabase(item, soldItem, amount);
             orders.put(soldItem, amount);
         });
-        return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(orders)));
+        return null; //orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(orders)));
     }
 
     public List<OrderDto> getReportOfOrders(Authentication authentication) {
-        String userId = getUserId(authentication);
-        return orderRepository.getReportOfOrders(userId).stream()
-                .map(orderMapper::toDto)
-                .collect(Collectors.toList());
+        long userId = getUserId(authentication);
+        return null; //orderRepository.getReportOfOrders(userId).stream()
+//                .map(orderMapper::toDto)
+//                .collect(Collectors.toList());
     }
 
     public OrderDto reOrder(Authentication authentication, String orderId) {
-        String userId = getUserId(authentication);
-        Order foundOrder = getCorrectOrder(orderId, userId);
-        Map<Item, Integer> orders = new HashMap<>();
-        foundOrder.getOrders().forEach((item, value) -> {
-            Item soldItem = new Item(item);
-            int amount = value;
-            setCorrectShippingDateAndDecrementAmountInDatabase(item, soldItem, amount);
-            orders.put(soldItem, amount);
-        });
-        return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(orders)));
+        long userId = getUserId(authentication);
+//        Order foundOrder = getCorrectOrder(orderId, userId);
+//        Map<Item, Integer> orders = new HashMap<>();
+//        foundOrder.getOrders().forEach((item, value) -> {
+//            Item soldItem = new Item(item);
+//            int amount = value;
+//            setCorrectShippingDateAndDecrementAmountInDatabase(item, soldItem, amount);
+//            orders.put(soldItem, amount);
+//        });
+//        return orderMapper.toDto(orderRepository.addOrder(userId, orderMapper.toNewOrder(orders)));
+        return null;
     }
 
     private Order getCorrectOrder(String orderId, String userId) {
@@ -81,8 +84,8 @@ public class OrderService {
                 .orElseThrow();
     }
 
-    String getUserId(Authentication authentication) {
-        return userMapper.toUserDto(userRepository.getAllCustomers().stream()
+    long getUserId(Authentication authentication) {
+        return userMapper.toUserDto(userRepository.findAllByRole(UserRole.CUSTOMER).stream()
                 .filter(user -> user.getEmail().equals(authentication.getName()))
                 .findFirst()
                 .orElseThrow()).getId();
@@ -90,24 +93,24 @@ public class OrderService {
 
     void setCorrectShippingDateAndDecrementAmountInDatabase(Item item, Item soldItem, int amount) {
         LocalDate shippingDate = LocalDate.now().plusDays(1);
-        if (itemRepository.getAmountOfItems(item) - amount < 0) {
+        if (itemRepository.count() - amount < 0) {
             shippingDate = LocalDate.now().plusDays(7);
         }
-        itemRepository.decrementItemAmount(item, amount);
+        itemRepository.count();
         soldItem.setShippingDate(shippingDate);
     }
 
     public List<Report> viewItemsShippingToday() {
-        List<Report> reports = new ArrayList<>();
-        orderRepository.getOrdersPerUser().forEach((userId, orders) -> {
-            orders.stream().map(Order::getOrders).flatMap(items -> items.entrySet().stream()).filter(entrySet -> entrySet.getKey().getShippingDate().equals(LocalDate.now())).forEach(entrySet -> {
-                ItemDto item = itemMapper.toItemDto(entrySet.getKey());
-                int amount = entrySet.getValue();
-                UserDto user = userMapper.toUserDto(userRepository.getById(userId));
-                AddressDto address = user.getAddressDto();
-                reports.add(new Report(item, amount, user, address));
-            });
-        });
-        return reports;
+//        List<Report> reports = new ArrayList<>();
+//        orderRepository.getOrdersPerUser().forEach((userId, orders) -> {
+//            orders.stream().map(Order::getOrders).flatMap(items -> items.entrySet().stream()).filter(entrySet -> entrySet.getKey().getShippingDate().equals(LocalDate.now())).forEach(entrySet -> {
+//                ItemDto item = itemMapper.toItemDto(entrySet.getKey());
+//                int amount = entrySet.getValue();
+//                UserDto user = userMapper.toUserDto(userRepository.findById(userId));
+//                AddressDto address = user.getAddressDto();
+//                reports.add(new Report(item, amount, user, address));
+//            });
+//        });
+        return null; //reports;
     }
 }
