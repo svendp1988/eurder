@@ -9,7 +9,7 @@ import java.util.Objects;
 
 public class UserDto {
     @JsonView(View.Public.class)
-    private String id;
+    private long id;
     @JsonView(View.Public.class)
     private String firstName;
     @JsonView(View.Public.class)
@@ -26,7 +26,7 @@ public class UserDto {
     public UserDto() {
     }
 
-    public UserDto(String id, String firstName, String lastName, String email, UserRoleDto userRoleDto, String password, AddressDto addressDto) {
+    public UserDto(long id, String firstName, String lastName, String email, UserRoleDto userRoleDto, String password, AddressDto addressDto) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -44,6 +44,10 @@ public class UserDto {
         this.role = userDtoBuilder.getRole();
         this.password = userDtoBuilder.getPassword();
         this.addressDto = userDtoBuilder.getAddress();
+    }
+
+    public long getId() {
+        return id;
     }
 
     public String getFirstName() {
@@ -86,7 +90,4 @@ public class UserDto {
         return Objects.hash(firstName, lastName, role, addressDto);
     }
 
-    public String getId() {
-        return id;
-    }
 }

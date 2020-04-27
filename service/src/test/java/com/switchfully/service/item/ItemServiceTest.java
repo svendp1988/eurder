@@ -5,7 +5,6 @@ import com.switchfully.domain.item.Item;
 import com.switchfully.domain.item.ItemRepository;
 import com.switchfully.service.item.dto.CreateItemDto;
 import com.switchfully.service.item.dto.ItemDto;
-import com.switchfully.service.item.dto.UpdateItemDto;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -17,7 +16,7 @@ import java.util.List;
 import static com.switchfully.domain.item.builders.ItemBuilder.itemBuilder;
 import static com.switchfully.service.testbuilders.TestItemDtoBuilder.testItemDtoBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 

@@ -1,4 +1,4 @@
-package com.switchfully.jar;
+package com.switchfully;
 //
 //import com.switchfully.domain.item.Item;
 //import com.switchfully.domain.item.ItemRepository;
@@ -13,11 +13,15 @@ package com.switchfully.jar;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.jayway.jsonpath.JsonPath;
 import com.switchfully.service.item.dto.CreateItemDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.skyscreamer.jsonassert.Customization;
 import org.skyscreamer.jsonassert.JSONAssert;
+import org.skyscreamer.jsonassert.JSONCompareMode;
+import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -26,14 +30,23 @@ import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
+import org.springframework.test.web.reactive.server.JsonPathAssertions;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import java.security.Principal;
 
+import static com.google.common.collect.Lists.newArrayList;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
+import static org.springframework.http.MediaType.APPLICATION_JSON;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -50,6 +63,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
 class ApplicationTests {
+    Authentication adminAuthentication = new UsernamePasswordAuthenticationToken("admin@order.com", BCrypt.hashpw("root", BCrypt.gensalt(12)));
+    Authentication customerAuthentication = new UsernamePasswordAuthenticationToken("sven@order.com", BCrypt.hashpw("customer", BCrypt.gensalt(12)));
 
     @Autowired
     MockMvc mockMvc;
@@ -95,69 +110,63 @@ class ApplicationTests {
 //        }
 //
 //    }
-//
-//    @Nested
-//    @DisplayName("SecurityIntegrationTest")
-//    class SecurityIntegrationTest {
-//
-//        @Test
-//        @DisplayName("View all customers without correct authentication")
-//        void tryingToViewAllCustomers_withoutCorrectAuthentication_shouldResultInError() {
-//            WebTestClient
-//                    .bindToServer()
-//                    .baseUrl("http://localhost:8080")
-//                    .defaultHeaders(header -> header.setBasicAuth("sven@order.com", "awesome"))
-//                    .defaultHeaders(header -> header.setAccept(newArrayList(APPLICATION_JSON)))
-//                    .defaultHeaders(header -> header.setContentType(APPLICATION_JSON))
-//                    .build()
-//                    .get()
-//                    .uri("/customers")
-//                    .exchange()
-//                    .expectStatus().isForbidden()
-//                    .expectBody().jsonPath("$.message").isEqualTo("You don't have the rights to do that.");
-//        }
-//
-//        @Test
-//        @DisplayName("View a single customers without correct authentication")
-//        void tryingToViewASingleCustomers_withoutCorrectAuthentication_shouldResultInError() {
-//            WebTestClient
-//                    .bindToServer()
-//                    .baseUrl("http://localhost:8080")
-//                    .defaultHeaders(header -> header.setBasicAuth("sven@order.com", "awesome"))
-//                    .defaultHeaders(header -> header.setAccept(newArrayList(APPLICATION_JSON)))
-//                    .defaultHeaders(header -> header.setContentType(APPLICATION_JSON))
-//                    .build()
-//                    .get()
-//                    .uri(uriBuilder -> uriBuilder
-//                            .path("/customers")
-//                            .queryParam("id", "someId")
-//                            .build())
-//                    .exchange()
-//                    .expectStatus().isForbidden()
-//                    .expectBody().jsonPath("$.message").isEqualTo("You don't have the rights to do that.");
-//        }
-//
-//    }
+
+    @Nested
+    @DisplayName("SecurityIntegrationTest")
+    class SecurityIntegrationTest {
+
+        @Test
+        @DisplayName("View all customers without correct authentication")
+        void tryingToViewAllCustomers_withoutCorrectAuthentication_shouldResultInError() throws Exception {
+            String expected = "You don't have the rights to do that.";
+            mockMvc.
+                    perform(get("/customers")
+                            .with(user("sven@order.com").password("customer"))
+                            .contentType(APPLICATION_JSON))
+                    .andExpect(status().isForbidden())
+                    .andExpect(status().reason(expected));
+        }
+
+        @Test
+        @DisplayName("View a single customers with correct authentication")
+        @WithMockUser(authorities = "VIEW_CUSTOMERS")
+        void tryingToViewASingleCustomers_withoutCorrectAuthentication_shouldResultInError() throws Exception {
+            String expected = "[{\"id\":1,\"firstName\":\"Customer\",\"lastName\":\"New\",\"email\":\"customer@order.com\"}," +
+                    "{\"id\":1,\"firstName\":\"Other\",\"lastName\":\"Customer\",\"email\":\"test@mail.com\"}]";
+            String actual =
+                    mockMvc
+                            .perform(get("/customers")
+                                    .contentType(APPLICATION_JSON))
+                            .andExpect(status().isOk())
+                            .andReturn()
+                            .getResponse()
+                            .getContentAsString(); 
+            assertEquals(expected, actual, new CustomComparator(JSONCompareMode.LENIENT,
+                    new Customization("$.id", (o1, o2) -> true)));
+        }
+
+    }
 
     @Nested
     @DisplayName("ItemControllerIntegrationTest")
     class ItemControllerIntegrationTest {
         CreateItemDto createItemDto = new CreateItemDto("name", "description", 0.0, 2);
-        Authentication authentication = new UsernamePasswordAuthenticationToken("admin@order.com", "root");
+
         @Test
         @DisplayName("Add items as admin.")
+        @WithMockUser(authorities = "ADD_ITEM")
         void adminCanAddItems() throws Exception {
             String actual = mockMvc
                     .perform(post("/items")
-                            .with(SecurityMockMvcRequestPostProcessors.authentication(authentication))
-                            .contentType(MediaType.APPLICATION_JSON)
+                            .contentType(APPLICATION_JSON)
                             .content(new ObjectMapper().writeValueAsString(createItemDto)))
                     .andExpect(status().isCreated())
                     .andReturn()
                     .getResponse()
                     .getContentAsString();
             String expected = "{\"id\":1,\"name\":\"name\",\"description\":\"description\",\"price\":0.0}";
-            JSONAssert.assertEquals(expected, actual, true);
+            assertEquals(expected, actual, new CustomComparator(JSONCompareMode.LENIENT,
+                    new Customization("id", (o1, o2) -> true)));
         }
     }
 ////    @Nested

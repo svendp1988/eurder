@@ -48,10 +48,10 @@ public class UserController {
 
     @JsonView(View.Public.class)
     @PreAuthorize("hasAuthority('VIEW_CUSTOMERS')")
-    @GetMapping(params = "{id}", produces = "application/json")
+    @GetMapping(path = "/{id}", produces = "application/json")
 //    @ApiOperation(value = "Get customer by id.", notes = "Customer with id will be returned" , response = UserDto.class)
     @ResponseStatus(HttpStatus.OK)
-    public UserDto getById(@RequestParam String id) {
+    public UserDto getById(@RequestParam long id) {
         LOGGER.info("Returning customer with id: " + id);
         return userService.getById(id);
     }

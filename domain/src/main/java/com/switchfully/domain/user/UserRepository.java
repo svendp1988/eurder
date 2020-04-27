@@ -3,6 +3,7 @@ package com.switchfully.domain.user;
 //import com.switchfully.domain.exceptions.EmailAlreadyRegisteredException; //TODO: check exceptions
 
 import com.switchfully.domain.exceptions.UserNotFoundException;
+import com.switchfully.domain.user.feature.UserRole;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
@@ -21,12 +22,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
 
     @Override
     public List<User> findAll();
-
-//    public boolean isEmailAvailable(String email) {
-//        if (userRepository.values().stream()
-//                .anyMatch(member -> member.getEmail().equals(email))) {
-//            throw new EmailAlreadyRegisteredException(email);
-//        }
-//        return true;
-//    }
+    List<User> findAllByRole(UserRole role);
 }

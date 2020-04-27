@@ -11,7 +11,7 @@ import java.util.UUID;
 @Table(name = "addresses")
 public class Address {
     @Id
-    @GeneratedValue(generator = "address_id_seq")
+    @GeneratedValue(generator = "address_id_seq", strategy = GenerationType.IDENTITY)
     @Column(name = "address_id")
     private long id;
     @Column(name = "street")

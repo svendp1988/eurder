@@ -9,7 +9,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 import static com.switchfully.api.testbuilders.TestAddressDtoBuilder.testAddressDtoBuilder;
 
 public class TestUserDtoBuilder {
-    private String id = "id";
+    private long id = 1L;
     private String firstName = "firstName";
     private String lastName = "lastName";
     private String email = "email";

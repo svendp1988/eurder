@@ -60,9 +60,5 @@ class ItemControllerTest {
         when(itemService.updateItem(updateItemDto)).thenReturn(itemDto);
         ItemDto actualItemDto = itemController.updateItem(updateItemDto);
         assertThat(actualItemDto).isEqualToIgnoringGivenFields(updateItemDto, "shippingDate");
-        assertEquals(actualItemDto.getId(), updateItemDto.getId());
-        assertEquals(actualItemDto.getName(), updateItemDto.getName());
-        assertEquals(actualItemDto.getDescription(), updateItemDto.getDescription());
-        assertEquals(actualItemDto.getPrice(), updateItemDto.getPrice());
     }
 }

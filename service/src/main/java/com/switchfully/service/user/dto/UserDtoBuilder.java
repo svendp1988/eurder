@@ -4,7 +4,7 @@ import com.switchfully.service.address.AddressDto;
 import com.switchfully.service.user.role.UserRoleDto;
 
 public class UserDtoBuilder {
-    private String id;
+    private long id;
     private String firstName;
     private String lastName;
     private String email;
@@ -27,7 +27,7 @@ public class UserDtoBuilder {
         return new CreateUserDto(this);
     }
 
-    public UserDtoBuilder withId(String id) {
+    public UserDtoBuilder withId(long id) {
         this.id = id;
         return this;
     }
@@ -63,7 +63,7 @@ public class UserDtoBuilder {
         return this;
     }
 
-    public String getId() {
+    public long getId() {
         return id;
     }
 
