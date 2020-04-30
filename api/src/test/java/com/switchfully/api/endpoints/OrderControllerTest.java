@@ -20,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class OrderControllerTest {
-    OrderDto order = new OrderDto("orderId", Map.of(new ItemDto(1L, "name", "description", 2.5, null, 2), 2), 5);
+    OrderDto order = new OrderDto("orderId", Map.of(new ItemDto(1L, "name", "description", 2.5, null, 2, null), 2), 5);
     List<OrderDto> orders = List.of(order);
     Authentication authentication = new UsernamePasswordAuthenticationToken("sven@order.com", "awesome");
     OrderRequestDto orderRequestDto = new OrderRequestDto(Map.of("id", 2));

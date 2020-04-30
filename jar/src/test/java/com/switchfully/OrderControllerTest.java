@@ -1,4 +1,4 @@
-package com.switchfully.jar;
+package com.switchfully;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.switchfully.service.order.OrderRequestDto;

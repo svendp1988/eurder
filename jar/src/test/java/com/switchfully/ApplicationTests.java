@@ -11,41 +11,26 @@ package com.switchfully;
 //import org.junit.jupiter.api.DisplayName;
 //import org.junit.jupiter.api.Nested;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.jayway.jsonpath.JsonPath;
 import com.switchfully.service.item.dto.CreateItemDto;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.skyscreamer.jsonassert.Customization;
-import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.test.context.support.WithMockUser;
-import org.springframework.security.test.context.support.WithUserDetails;
-import org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors;
-import org.springframework.test.web.reactive.server.JsonPathAssertions;
-import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.security.Principal;
-
-import static com.google.common.collect.Lists.newArrayList;
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.skyscreamer.jsonassert.JSONAssert.assertEquals;
 import static org.springframework.http.MediaType.APPLICATION_JSON;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -63,8 +48,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 @AutoConfigureMockMvc
 class ApplicationTests {
-    Authentication adminAuthentication = new UsernamePasswordAuthenticationToken("admin@order.com", BCrypt.hashpw("root", BCrypt.gensalt(12)));
-    Authentication customerAuthentication = new UsernamePasswordAuthenticationToken("sven@order.com", BCrypt.hashpw("customer", BCrypt.gensalt(12)));
 
     @Autowired
     MockMvc mockMvc;
@@ -140,7 +123,8 @@ class ApplicationTests {
                             .andExpect(status().isOk())
                             .andReturn()
                             .getResponse()
-                            .getContentAsString(); 
+                            .getContentAsString();
+//            System.out.println(actual);
             assertEquals(expected, actual, new CustomComparator(JSONCompareMode.LENIENT,
                     new Customization("$.id", (o1, o2) -> true)));
         }

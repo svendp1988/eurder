@@ -28,7 +28,8 @@ public class ItemMapper {
                 item.getDescription(),
                 item.getPrice(),
                 item.getShippingDate(),
-                item.getAmount());
+                item.getAmount(),
+                item.getImageUrl());
     }
 
     public List<ItemDto> toItemDto(List<Item> items) {

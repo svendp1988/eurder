@@ -36,9 +36,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.sessionManagement().sessionCreationPolicy(STATELESS);
         http.csrf().disable().authorizeRequests()
-                .antMatchers(UserController.USER_RESOURCE_PATH + "**").permitAll()
-                .antMatchers(ItemController.ITEM_RESOURCE_PATH + "**").permitAll() //TODO: manage access
-                .antMatchers(OrderController.ORDER_RESOURCE_PATH + "**").permitAll()
+                .antMatchers(UserController.USER_RESOURCE_PATH + "/**").permitAll()
+                .antMatchers(ItemController.ITEM_RESOURCE_PATH + "/**").permitAll() //TODO: manage access
+                .antMatchers(OrderController.ORDER_RESOURCE_PATH + "/**").permitAll()
                 .anyRequest().authenticated()
                 .and().httpBasic()
                 .authenticationEntryPoint(authEntryPoint)

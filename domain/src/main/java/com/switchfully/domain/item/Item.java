@@ -26,6 +26,8 @@ public class Item {
     private LocalDate shippingDate;
     @Column
     private int amount;
+    @Column
+    private String imageUrl;
 
     public Item() {}
 
@@ -66,6 +68,10 @@ public class Item {
         return amount;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -100,4 +106,5 @@ public class Item {
     public int hashCode() {
         return Objects.hash(name, description, price);
     }
+
 }
