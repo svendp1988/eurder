@@ -22,17 +22,20 @@ public class ItemDto {
     private LocalDate shippingDate;
     @JsonView(View.Restricted.class)
     private int amount;
+    @JsonView(View.Public.class)
+    private String imageUrl;
 
     public ItemDto() {
     }
 
-    public ItemDto(long id, String name, String description, double price, LocalDate shippingDate, int amount) {
+    public ItemDto(long id, String name, String description, double price, LocalDate shippingDate, int amount, String imageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.shippingDate = shippingDate;
         this.amount = amount;
+        this.imageUrl = imageUrl;
     }
 
     public ItemDto(ItemDtoBuilder itemDtoBuilder) {
@@ -92,5 +95,9 @@ public class ItemDto {
                 ", price=" + price +
                 ", shippingDate=" + shippingDate +
                 '}';
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }

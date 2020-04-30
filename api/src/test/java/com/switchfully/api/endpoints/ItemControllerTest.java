@@ -11,7 +11,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
-import java.util.Map;
 
 import static com.switchfully.api.testbuilders.TestItemDtoBuilder.testItemDtoBuilder;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -56,7 +55,7 @@ class ItemControllerTest {
 
     @Test
     void updateItem_returnsDtoWithUpdatedValues() {
-        ItemDto itemDto = new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice(), null, updateItemDto.getAmount());
+        ItemDto itemDto = new ItemDto(updateItemDto.getId(), updateItemDto.getName(), updateItemDto.getDescription(), updateItemDto.getPrice(), null, updateItemDto.getAmount(), null);
         when(itemService.updateItem(updateItemDto)).thenReturn(itemDto);
         ItemDto actualItemDto = itemController.updateItem(updateItemDto);
         assertThat(actualItemDto).isEqualToIgnoringGivenFields(updateItemDto, "shippingDate");

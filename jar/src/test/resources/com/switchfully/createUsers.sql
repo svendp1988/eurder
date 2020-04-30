@@ -1,0 +1,4 @@
+INSERT INTO users (user_id, first_name, last_name, email, user_role, password, address_id) VALUES (1, 'firstName', 'lastName', 'email', 'CUSTOMER', 1);
+INSERT INTO users (user_id, first_name, last_name, email, user_role, password, address_id) VALUES (2, 'firstName', 'lastName', 'email', 'CUSTOMER', 2);
+INSERT INTO users (user_id, first_name, last_name, email, user_role, password, address_id) VALUES (3, 'firstName', 'lastName', 'email', 'CUSTOMER', 3);
+INSERT INTO users (user_id, first_name, last_name, email, user_role, password, address_id) VALUES (4, 'firstName', 'lastName', 'email', 'CUSTOMER', 4);

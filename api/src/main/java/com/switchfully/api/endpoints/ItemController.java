@@ -18,6 +18,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = ItemController.ITEM_RESOURCE_PATH)
+@CrossOrigin(origins = "http://localhost:4200")
 public class ItemController {
     public static final String ITEM_RESOURCE_PATH = "/items";
     private final static Logger LOGGER = LoggerFactory.getLogger(ItemController.class);
@@ -47,7 +48,7 @@ public class ItemController {
         return itemService.findAll();
     }
 
-    @PreAuthorize("hasAuthority('GET_ITEM_BY_ID')")
+//    @PreAuthorize("hasAuthority('GET_ITEM_BY_ID')")
     @GetMapping(path = "/{id}", produces = "application/json")
 //    @ApiOperation(value = "Getting item by id", notes = "Customers can get items by id.", response = ItemDto.class)
     @ResponseStatus(HttpStatus.OK)

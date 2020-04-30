@@ -27,4 +27,7 @@
 -- DELETE FROM USERS CASCADE;
 -- DELETE FROM addresses CASCADE;
 -- UPDATE eurder.users SET user_role = 'CUSTOMER' where email = 'customer@order.com';
-DELETE FROM users WHERE email = 'customer@order.com';
+-- DELETE FROM users WHERE email = 'customer@order.com';
+-- ALTER TABLE items
+-- ADD COLUMN IF NOT EXISTS image_url text;
+UPDATE items SET image_url = 'https://www.trollekelder.be/cafe/wp-content/uploads/2013/06/duvel.jpg' where name = 'beer';
