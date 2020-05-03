@@ -18,6 +18,7 @@ public class ItemMapper {
                 .withDescription(createItemDto.getDescription())
                 .withPrice(createItemDto.getPrice())
                 .withAmount(createItemDto.getAmount())
+                .withImageUrl(createItemDto.getImageUrl())
                 .build();
     }
 

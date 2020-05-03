@@ -21,7 +21,7 @@ public class TestItemDtoBuilder {
     public UpdateItemDto buildTestUpdateItemDto() { return new UpdateItemDto(id, name, description, price, amount); }
 
     public CreateItemDto buildTestCreateItemDto() {
-        return new CreateItemDto(name, description, price, amount);
+        return new CreateItemDto(name, description, price, amount, null);
     }
 
     public ItemDto buildTestItemDto() {

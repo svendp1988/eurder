@@ -44,6 +44,7 @@ public class Item {
         description = itemBuilder.getDescription();
         price = itemBuilder.getPrice();
         amount = itemBuilder.getAmount();
+        imageUrl = itemBuilder.getImageUrl();
     }
 
     public long getId() { return id; }

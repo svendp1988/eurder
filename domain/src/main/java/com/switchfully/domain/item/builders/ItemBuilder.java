@@ -7,6 +7,7 @@ public class ItemBuilder {
     private String description;
     private double price;
     private int amount;
+    private String imageUrl;
 
     protected ItemBuilder() {
     }
@@ -55,4 +56,12 @@ public class ItemBuilder {
         return this;
     }
 
+    public ItemBuilder withImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+        return this;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
 }

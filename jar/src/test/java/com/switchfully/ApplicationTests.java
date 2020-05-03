@@ -22,9 +22,6 @@ import org.skyscreamer.jsonassert.comparator.CustomComparator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -134,7 +131,7 @@ class ApplicationTests {
     @Nested
     @DisplayName("ItemControllerIntegrationTest")
     class ItemControllerIntegrationTest {
-        CreateItemDto createItemDto = new CreateItemDto("name", "description", 0.0, 2);
+        CreateItemDto createItemDto = new CreateItemDto("name", "description", 0.0, 2, null);
 
         @Test
         @DisplayName("Add items as admin.")

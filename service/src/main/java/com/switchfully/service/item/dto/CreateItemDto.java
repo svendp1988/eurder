@@ -5,15 +5,17 @@ public class CreateItemDto {
     private String description;
     private double price;
     private int amount;
+    private String imageUrl;
 
     public CreateItemDto() {
     }
 
-    public CreateItemDto(String name, String description, double price, int amount) {
+    public CreateItemDto(String name, String description, double price, int amount, String imageUrl) {
         this.name = name;
         this.description = description;
         this.price = price;
         this.amount = amount;
+        this.imageUrl = imageUrl;
     }
 
     public CreateItemDto(ItemDtoBuilder itemDtoBuilder) {
@@ -37,5 +39,9 @@ public class CreateItemDto {
 
     public int getAmount() {
         return amount;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
     }
 }
